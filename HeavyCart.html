@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>নিত্য সদাই - Smart Cart</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="assets/css/styles3.css">
+</head>
+<body>
+
+<header><i class="fas fa-store"></i>নিত্য <span class="span-all">সদাই</span> - Cart</header>
+<marquee class="marquee"><i class="fas fa-tags"></i> আজকের বিশেষ অফার! চাল, ডাল, তেল, চিনি সহ সব পণ্যে বিশেষ ছাড় চলছে। দ্রুত অর্ডার করুন!</marquee>
+
+<div class="cart-section">
+    <h2><i class="fas fa-shopping-cart"></i> আপনার কার্ট</h2>
+    <div class="cart-items" id="cart-items">
+        <p id="empty-msg">আপনার কার্টে কোনো পণ্য নেই।</p>
+    </div>
+    <div class="cart-total" id="cart-total">মোট: 0৳</div>
+    <button id="checkout"><i class="fas fa-credit-card"></i> Checkout</button>
+    <button id="view-orders">অর্ডার দেখুন</button>
+    <div id="orders-list"></div>
+</div>
+
+<div class="modal-overlay" id="checkout-modal">
+    <div class="modal-content">
+        <span class="close-popup" id="close-modal">&times;</span>
+        <h3>Checkout Form</h3>
+        <form id="checkout-form">
+            <input type="text" id="name" placeholder="Name" required>
+            <textarea id="address" placeholder="Address"></textarea>
+            <input type="tel" id="mobile" placeholder="Mobile No." required>
+            <input type="email" id="email" placeholder="Email">
+            <select id="payment-method">
+                <option value="cod">Cash on Delivery</option>
+                <option value="bkash">Bkash / Nagad</option>
+            </select>
+            <div id="payment-info" style="display:none;">
+                <input type="text" id="payment-number" placeholder="Your Bkash / Nagad No.">
+                <input type="text" id="transaction-id" placeholder="Transaction ID">
+            </div>
+            <button type="submit">Confirm Order</button>
+        </form>
+    </div>
+</div>
+
+<footer>  
+  <div class="footer-container">  
+    <div class="footer-left">  
+      <h2><i class="fas fa-store"></i> নিত্য <span class="span-all">সদাই</span></h2>  
+      <p><i class="fas fa-copyright"></i> এই সাইটের কোনো অংশ বা Ui বা ডিজাইন কপি করা হলে তার বিরুদ্ধে একশন নেওয়া হবে! | Created By <span>Xrabon</span></p>  
+    </div>  
+    <div class="footer-right">  
+      <a href="#"><i class="fab fa-facebook-f"></i></a>  
+      <a href="#"><i class="fab fa-twitter"></i></a>  
+      <a href="#"><i class="fab fa-instagram"></i></a>  
+      <a href="#"><i class="fab fa-youtube"></i></a>  
+    </div>  
+  </div>  
+</footer>  
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+import { firebaseConfig } from './assets/Firebase-Config/FirebaseConfig.js';
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+let userId = localStorage.getItem('userId');
+if(!userId){
+    userId = 'user_'+Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('userId', userId);
+}
+
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+const cartItems = document.getElementById('cart-items');
+const cartTotal = document.getElementById('cart-total');
+const emptyMsg = document.getElementById('empty-msg');
+
+function renderCart() {
+    cartItems.innerHTML='';
+    if(cart.length===0){ 
+        emptyMsg.style.display='block'; 
+        cartTotal.textContent='মোট: 0৳'; 
+        return; 
+    }
+    emptyMsg.style.display='none';
+    cart.forEach((item,index)=>{
+        const card = document.createElement('div');
+        card.className='cart-card';
+        const price = parseFloat(item.price)||0;
+        const qty = parseInt(item.qty)||1;
+        let mediaHTML = '';
+        if(item.media){
+            if(item.media.match(/\.(jpeg|jpg|gif|png|webp)$/i)) mediaHTML=`<img src="${item.media}" width="80">`;
+            else if(item.media.match(/\.(mp4|webm|ogg)$/i)) mediaHTML=`<video src="${item.media}" controls width="80"></video>`;
+        }
+        card.innerHTML=`
+            ${mediaHTML}
+            <div class="card-title">${item.name || 'No Name'}</div>
+            <div class="card-sub">${item.brand || ''} | ${item.weight || ''} | ৳${price} x ${qty}</div>
+            <div class="quantity-controls">
+                <button class="minus">-</button>
+                <span class="qty">${qty}</span>
+                <button class="plus">+</button>
+            </div>
+            <button class="remove-btn">Remove</button>
+        `;
+        card.querySelector('.plus').addEventListener('click', ()=>{ item.qty=qty+1; renderCart(); });
+        card.querySelector('.minus').addEventListener('click', ()=>{ item.qty=Math.max(1,qty-1); renderCart(); });
+        card.querySelector('.remove-btn').addEventListener('click', ()=>{ cart.splice(index,1); saveCart(); renderCart(); });
+        cartItems.appendChild(card);
+    });
+    updateTotal();
+}
+
+function updateTotal(){
+    let total = 0;
+    cart.forEach(item=>{
+        const price = parseFloat(item.price)||0;
+        const qty = parseInt(item.qty)||1;
+        total += price*qty;
+    });
+    const delivery = total >= 1000 ? 0 : 50;
+    cartTotal.textContent = total >= 1000 ? `মোট: ${total}৳ (Delivery Free)` : `মোট: ${total+delivery}৳ (Delivery: ${delivery}৳)`;
+    saveCart();
+}
+
+function saveCart(){ localStorage.setItem('cart',JSON.stringify(cart)); }
+
+renderCart();
+
+const checkoutModal = document.getElementById('checkout-modal');
+const checkoutBtn = document.getElementById('checkout');
+const closeModal = document.getElementById('close-modal');
+checkoutBtn.addEventListener('click', ()=>{
+    if(cart.length===0) return alert("কার্ট খালি!");
+    checkoutModal.style.display='flex';
+});
+closeModal.addEventListener('click', ()=>{checkoutModal.style.display='none';});
+
+document.getElementById('payment-method').addEventListener('change',(e)=>{
+    document.getElementById('payment-info').style.display=(e.target.value==='cod')?'none':'block';
+});
+
+document.getElementById('checkout-form').addEventListener('submit',(e)=>{
+    e.preventDefault();
+    let total=0;
+    cart.forEach(item=>{
+        const price = parseFloat(item.price)||0;
+        const qty = parseInt(item.qty)||1;
+        total += price*qty;
+    });
+    let delivery = total >= 1000 ? 0 : 50;
+    const orderData={
+        cart:cart,
+        total:total,
+        delivery:delivery,
+        name:document.getElementById('name').value,
+        address:document.getElementById('address').value,
+        mobile:document.getElementById('mobile').value,
+        email:document.getElementById('email').value,
+        paymentMethod:document.getElementById('payment-method').value,
+        paymentNumber:document.getElementById('payment-number').value,
+        transactionId:document.getElementById('transaction-id').value,
+        timestamp:new Date().toISOString(),
+        approved:false,
+        userId:userId
+    };
+    push(ref(db,'orders/'),orderData)
+    .then(()=>{
+        cart=[]; saveCart(); renderCart();
+        checkoutModal.style.display='none';
+        document.getElementById('checkout-form').reset();
+        alert('অর্ডার সাবমিট হয়েছে!');
+    })
+    .catch(()=>{ alert('কিছু সমস্যা হয়েছে। আবার চেষ্টা করুন।'); });
+});
+
+const viewOrdersBtn = document.getElementById('view-orders');
+const ordersList = document.getElementById('orders-list');
+
+viewOrdersBtn.addEventListener('click', () => {
+    ordersList.innerHTML = 'লোড হচ্ছে...';
+    const ordersRef = ref(db,'orders/');
+    onValue(ordersRef, (snapshot)=>{
+        const allOrders = snapshot.val();
+        if(!allOrders){ ordersList.innerHTML='কোনো অর্ডার নেই।'; return; }
+        const userOrders = Object.values(allOrders).filter(o=>o.userId===userId);
+        if(userOrders.length===0){ ordersList.innerHTML='আপনার কোনো অর্ডার নেই।'; return; }
+        ordersList.innerHTML='';
+        userOrders.forEach(order=>{
+            const orderDate = new Date(order.timestamp);
+            const formattedDate = orderDate.toLocaleString('bn-BD', {day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
+            let itemsHTML='';
+            order.cart.forEach(item=>{
+                const price = parseFloat(item.price)||0;
+                const qty = parseInt(item.qty)||1;
+                itemsHTML += `<div class="order-item">
+                    ${item.media?`<img src="${item.media}">`:''}
+                    <span>${item.name || 'No Name'} - ৳${price} x ${qty}</span>
+                </div>`;
+            });
+            ordersList.innerHTML += `
+                <div class="order-card">
+                    <div class="order-card-header">
+                        <i class="fas fa-shopping-bag"></i>
+                        <h4>অর্ডার মোট: ৳${order.total+order.delivery}</h4>
+                    </div>
+                    ${itemsHTML}
+                    <div class="order-footer">
+                        <div>ডেলিভারি চার্জ: ৳${order.delivery}</div>
+                        <div>নাম: ${order.name}</div>
+                        <div>মোবাইল: ${order.mobile}</div>
+                        <div>অর্ডার সময়: ${formattedDate}</div>
+                        <div class="order-status">স্ট্যাটাস: ${order.approved?'Approved ✅':'Pending ⏳'}</div>
+                    </div>
+                </div>
+            `;
+        });
+    });
+});
+</script>
+</body>
+</html>
