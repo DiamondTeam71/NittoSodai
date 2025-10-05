@@ -8,18 +8,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="assets/css/styles2.css">
-<link rel="stylesheet" href="assets/css/styles.css">
 <style>
-.fake-input { width: 100%; padding: 10px; margin: 6px 0; border: 4px solid black; border-radius: 8px; font-size: 14px; background: white; font-weight: bold; text-align: left; }
-.fake-input del { color: gray; margin-right: 8px; }
-.fake-input .price-discount { color: red; font-weight: bold; }
-.add-to-cart { margin-top: 10px; padding: 12px 18px; background: red; color: white; border: 4px solid black; border-radius: 12px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-.add-to-cart:hover { background: aqua; color: black; }
-.game-card.highlight { animation: highlightCard 0.8s ease-in-out; }
-@keyframes highlightCard { 0% { transform: scale(1); box-shadow: 0 0 0 rgba(255,87,34,0.5); } 50% { transform: scale(1.1); box-shadow: 0 0 15px rgba(255,87,34,0.7); } 100% { transform: scale(1); box-shadow: 0 0 0 rgba(255,87,34,0); } }
-.navbar a { text-decoration: none; }
-.price-original { color: gray; text-decoration: line-through; }
-.price-discount { color: red; font-weight: bold; }
+
 </style>
 </head>
 <body>
@@ -63,9 +53,9 @@
 </footer>
 
 <div class="navbar">
-  <a href="index.html" class="nav-item active"><i class="fa-solid fa-house"></i> হোম
+  <a href="index.html" class="nav-item active"><i class="fa-solid fa-house"></i> হোম</a>
   <a href="#" class="nav-item" id="profile-btn"><i class="fa-solid fa-globe"></i> ভাষা সিলেক্টর</a>
-  <a href="NewCart.html" class="nav-item"><i class="fa-solid fa-cart-arrow-down"></i> <span id="cart-count">0</span> কার্টস
+  <a href="NewCart.html" class="nav-item"><i class="fa-solid fa-cart-arrow-down"></i> <span id="cart-count">0</span> কার্টস</a>
   <a href="#" class="nav-item" id="developer-btn"><i class="fas fa-sitemap"></i> সাইট নির্মাতা</a>
   <a href="#" class="nav-item" id="seller-btn"><i class="fas fa-user"></i> পণ্য বিক্রেতা</a>
 </div>
@@ -80,11 +70,9 @@
     <span class="close-btn">&times;</span>
     <img id="modal-img" class="modal-img" src="">
     <h2 id="modal-title"></h2>
-    <div class="modal-text" id="modal-text">     
-    </div>
+    <div class="modal-text" id="modal-text"></div>
   </div>
 </div>
-<script src="assets/js/script.js"></script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
@@ -101,26 +89,38 @@ const suggestions = document.getElementById("suggestions");
 let allProducts = [];
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-function calculateDiscountPrice(price, discountPercent, discountAmount){
-    let finalPrice = parseFloat(price)||0;
-    const percentDisc = Math.round(finalPrice * (parseFloat(discountPercent)||0)/100);
-    const amtDisc = parseFloat(discountAmount)||0;
-    if(percentDisc>0) finalPrice -= percentDisc;
-    else if(amtDisc>0) finalPrice -= amtDisc;
-    return finalPrice;
+function updateCartCount() {
+    const countSpan = document.getElementById('cart-count');
+    const totalQty = cart.reduce((sum, item) => sum + (parseInt(item.quantity) || 1), 0);
+    if (totalQty > 0) {
+        countSpan.style.display = 'inline-block';
+        countSpan.textContent = totalQty;
+    } else countSpan.style.display = 'none';
 }
+
+updateCartCount();
 
 onValue(ref(db, 'products/sector0'), snapshot => {
     productList.innerHTML = '';
     allProducts = [];
-    if(!snapshot.exists()) return;
+    if (!snapshot.exists()) return;
 
-    snapshot.forEach(childSnap=>{
+    const productsArray = [];
+    snapshot.forEach(childSnap => {
         const product = childSnap.val();
         product.id = childSnap.key;
-        allProducts.push(product);
+        productsArray.push(product);
+    });
 
-        const finalPrice = calculateDiscountPrice(product.price, product.discountPercent, product.discountAmount);
+    productsArray.sort((a, b) => {
+        if (a.isLast) return 1;
+        if (b.isLast) return -1;
+        return 0;
+    });
+
+    productsArray.forEach((product, index) => {
+        product.idNumber = index + 1;
+        allProducts.push(product);
 
         const card = document.createElement('div');
         card.className = 'game-card';
@@ -128,7 +128,9 @@ onValue(ref(db, 'products/sector0'), snapshot => {
 
         const cardImage = document.createElement('div');
         cardImage.className = 'card-image';
-        cardImage.style.backgroundImage = product.media ? `url("${product.media}")` : "url('https://via.placeholder.com/300x200?text=Image+Not+Found')";
+        cardImage.style.backgroundImage = product.media
+            ? `url("${product.media}")`
+            : "url('https://via.placeholder.com/300x200?text=Image+Not+Found')";
 
         const cardText = document.createElement('div');
         cardText.className = 'card-text';
@@ -137,47 +139,65 @@ onValue(ref(db, 'products/sector0'), snapshot => {
         card.appendChild(cardImage);
         card.appendChild(cardText);
 
-        card.addEventListener('click', ()=>{
+        card.addEventListener('click', () => {
             const popup = document.createElement('div');
             popup.className = 'product-popup';
-            const originalPrice = parseFloat(product.price)||0;
-            const percentDisc = Math.round(originalPrice * (parseFloat(product.discountPercent)||0)/100);
-            const amtDisc = parseFloat(product.discountAmount)||0;
+
+            const originalPrice = Number(product.price) || 0;
+            const discountAmount = Number(product.discountAmount) || 0;
+            const discountPercent = Number(product.discountPercent) || 0;
+
             let discountedPrice = originalPrice;
-            if(percentDisc>0) discountedPrice -= percentDisc;
-            else if(amtDisc>0) discountedPrice -= amtDisc;
+            if (discountAmount > 0) {
+                discountedPrice = originalPrice - discountAmount;
+            } else if (discountPercent > 0) {
+                discountedPrice = originalPrice - Math.round(originalPrice * discountPercent / 100);
+            }
 
-            let priceHTML = (percentDisc>0 || amtDisc>0) 
-                ? `<div class="fake-input">মূল্য: <del>৳${originalPrice}</del> <span class="price-discount">৳${discountedPrice}</span></div>`
-                : `<div class="fake-input">মূল্য: ৳${originalPrice}</div>`;
+            // Price HTML
+            let priceHTML = '';
+            if (discountedPrice < originalPrice) {
+                priceHTML = `
+                <div class="fake-input">
+                    <del>৳${originalPrice}</del>
+                    <span class="price-discount">৳${discountedPrice}</span>
+                </div>`;
+            } else {
+                priceHTML = `<div class="fake-input">মূল্য: ৳${originalPrice}</div>`;
+            }
 
-            let discountHTML = '';
-            if(percentDisc>0) discountHTML += `<input type="text" value="ডিসকাউন্ট পার্সেন্ট (%): ${product.discountPercent}%" readonly>`;
-            if(amtDisc>0) discountHTML += `<input type="text" value="ডিসকাউন্ট টাকা (৳): ${amtDisc}" readonly>`;
+            // Discount percent display
+            const displayDiscountPercent = discountAmount > 0
+                ? Math.round((discountAmount / originalPrice) * 100)
+                : discountPercent;
+            const discountHTML = displayDiscountPercent > 0
+                ? `<input type="text" value="ডিসকাউন্ট (%): ${displayDiscountPercent}%" readonly>` 
+                : '';
 
             popup.innerHTML = `
                 <div class="popup-content">
                     <span class="close-popup">&times;</span>
-                    <input type="text" value="পণ্যের নাম: ${product.name||''}" readonly>
-                    <input type="text" value="ব্র্যান্ডের নাম: ${product.brand||''}" readonly>
-                    <input type="text" value="ওজন: ${product.weight||''}" readonly>
+                    <input type="text" value="পণ্যের নাম: ${product.name || ''}" readonly>
+                    <input type="text" value="Product ID: NittoSodai-${String(product.idNumber).padStart(2,'0')}" readonly>
+                    <input type="text" value="ব্র্যান্ডের নাম: ${product.brand || ''}" readonly>
+                    <input type="text" value="ওজন: ${product.weight || ''}" readonly>
                     ${priceHTML}
                     ${discountHTML}
-                    <textarea rows="2" readonly>ট্যাগস: ${product.tags?product.tags.join(', '):''}</textarea>
-                    <textarea rows="3" readonly>মূল বিষয়বস্তু: ${product.popupContent||''}</textarea>
+                    <textarea rows="2" readonly>ট্যাগস: ${product.tags ? product.tags.join(', ') : ''}</textarea>
+                    <textarea rows="3" readonly>মূল বিষয়বস্তু: ${product.popupContent || ''}</textarea>
                     <button class="add-to-cart">Add to Cart</button>
                 </div>
             `;
             document.body.appendChild(popup);
 
-            popup.querySelector('.close-popup').addEventListener('click', ()=>popup.remove());
+            popup.querySelector('.close-popup').addEventListener('click', () => popup.remove());
 
-            popup.querySelector('.add-to-cart').addEventListener('click', ()=>{
+            popup.querySelector('.add-to-cart').addEventListener('click', () => {
                 const itemIndex = cart.findIndex(i => i.id === product.id);
-                if(itemIndex>-1) {
-                    cart[itemIndex].quantity = (cart[itemIndex].quantity||1)+1;
+                if (itemIndex > -1) {
+                    cart[itemIndex].quantity = (cart[itemIndex].quantity || 1) + 1;
                 } else {
-                    cart.push({...product, quantity:1, finalPrice:discountedPrice});
+                    cart.push({ ...product, quantity: 1, finalPrice: discountedPrice });
                 }
                 localStorage.setItem('cart', JSON.stringify(cart));
                 updateCartCount();
@@ -190,58 +210,49 @@ onValue(ref(db, 'products/sector0'), snapshot => {
     });
 });
 
-function updateCartCount(){
-    const countSpan = document.getElementById('cart-count');
-    const totalQty = cart.reduce((sum,item)=>sum+(parseInt(item.quantity)||1),0);
-    if(totalQty>0){
-        countSpan.style.display='inline-block';
-        countSpan.textContent = totalQty;
-    } else countSpan.style.display='none';
-}
-
-updateCartCount();
-
-searchInput.addEventListener('input', ()=>{
+// Search functionality
+searchInput.addEventListener('input', () => {
     const query = searchInput.value.toLowerCase().trim();
-    suggestions.innerHTML='';
-    if(query===''){
-        document.querySelectorAll('.game-card').forEach(c=>c.style.display='');
+    suggestions.innerHTML = '';
+    if (query === '') {
+        document.querySelectorAll('.game-card').forEach(c => c.style.display = '');
         return;
     }
-    let matchedTags=[];
-    allProducts.forEach(p=>{
-        if(p.tags){
-            p.tags.forEach(tag=>{
-                if(tag.toLowerCase().startsWith(query) && !matchedTags.includes(tag)) matchedTags.push(tag);
+    let matchedTags = [];
+    allProducts.forEach(p => {
+        if (p.tags) {
+            p.tags.forEach(tag => {
+                if (tag.toLowerCase().startsWith(query) && !matchedTags.includes(tag)) matchedTags.push(tag);
             });
         }
     });
-    matchedTags.forEach(tag=>{
+    matchedTags.forEach(tag => {
         const div = document.createElement('div');
-        div.className='suggestion-item';
-        div.textContent=tag;
-        div.addEventListener('click', ()=>{
-            searchInput.value=tag;
-            suggestions.innerHTML='';
+        div.className = 'suggestion-item';
+        div.textContent = tag;
+        div.addEventListener('click', () => {
+            searchInput.value = tag;
+            suggestions.innerHTML = '';
             filterProductsByTag(tag);
         });
         suggestions.appendChild(div);
     });
-    if(matchedTags.length===0){
-        document.querySelectorAll('.game-card').forEach(c=>c.style.display='none');
+    if (matchedTags.length === 0) {
+        document.querySelectorAll('.game-card').forEach(c => c.style.display = 'none');
     }
 });
 
-function filterProductsByTag(tag){
-    const matchedProducts = allProducts.filter(p=>p.tags && p.tags.includes(tag));
-    document.querySelectorAll('.game-card').forEach(card=>{
-        if(matchedProducts.find(p=>p.id===card.dataset.id)){
-            card.style.display='';
+function filterProductsByTag(tag) {
+    const matchedProducts = allProducts.filter(p => p.tags && p.tags.includes(tag));
+    document.querySelectorAll('.game-card').forEach(card => {
+        if (matchedProducts.find(p => p.id === card.dataset.id)) {
+            card.style.display = '';
             card.classList.add('highlight');
-            setTimeout(()=>card.classList.remove('highlight'),800);
-        } else card.style.display='none';
+            setTimeout(() => card.classList.remove('highlight'), 800);
+        } else card.style.display = 'none';
     });
 }
 </script>
+<script src="assets/Js/script.js"></script>
 </body>
 </html>
