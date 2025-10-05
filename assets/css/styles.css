@@ -16,20 +16,37 @@ body {
   padding-bottom: 67px;
 }
 
-header {
-  background: red;
-  padding: 20px;
-  font-size: 26px;
-  text-align: center;
-  border-top: 4px solid black;
-  border-bottom: 4px solid black;
-  color: white;
-}
-
+/* পরে আপডেট করা যেতে পারে
 header i {
   color: aqua;
   font-size: 36px;
   margin-right: 10px;
+} */
+
+header {
+  background: red;
+  padding: 20px;
+  font-size: 26px;
+  color: white;
+  border-top: 4px solid black;
+  border-bottom: 4px solid black;
+  display: flex;
+  align-items: center;   
+  justify-content: center; 
+  gap: 10px;  
+}
+
+.header-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  border: 3px solid black;
+  object-fit: cover; 
+}
+
+ .span-all {
+  color: gold; 
+  font-weight: bold; 
 }
 
 .main-content {
@@ -179,9 +196,26 @@ footer {
   flex-wrap: wrap;
 }
 
+.footer-left {
+  display: inline-block; 
+}
+
+.footer-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  border: 3px solid black;
+  object-fit: cover; 
+  vertical-align: middle;
+}
+
 .footer-left h2 {
-  font-size: 36px;
-  margin-bottom: 10px;
+  font-size: 30px;
+  margin: 0 0 0 10px; 
+  display: inline-block;
+  vertical-align: middle;   
+  line-height: 60px; 
+  
 }
 
 .footer-left p {
@@ -414,4 +448,130 @@ marquee {
 .card-image {
   background-size: cover;
   background-position: center;
+}
+
+.popup-menu {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+  border: 4px solid black;
+  padding: 20px 30px;
+  display: none;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 10001;
+  min-width: 200px;
+  text-align: center;
+  animation: fadeInScale 0.3s ease forwards;
+}
+@keyframes fadeInScale {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+.popup-menu button {
+  border: none;
+  background-color: #f0f0f0;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.popup-menu button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+.popup-menu button:hover {
+  background-color: #0056b3;
+  color: #fff;
+}
+.flag-icon {
+  width: 20px;
+  height: 14px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.custom-modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10001;
+  overflow-y: auto;
+}
+
+.modal-content {
+  background: #fff;
+  border: 4px solid black;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  padding: 30px;
+  margin: 20px;
+  border-radius: 37px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 4px;
+  font-size: 36px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #e74c3c;
+  transition: all 0.4s ease;
+}
+.close-btn:hover {
+  color: #f1c40f;
+  transform: rotate(90deg) scale(1.5);
+}
+.modal-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border: 4px solid black;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+#modal-title {
+  font-size: 22px;
+  background: yellow;
+  padding: 5px;
+  border-radius: 24px;
+  border: 4px solid black;
+  color: #2c3e50;
+  margin-bottom: 12px;
+}
+.modal-text {
+  flex: 1;  
+  font-size: 15px;
+  color: #444;
+  background: wheat;
+  padding: 8px;
+  border-radius: 24px;
+  border: 4px solid black;
+  padding-right: 10px;
+  text-align: justify;
+  margin-bottom: 15px;
+}
+
+.custom-modal {
+  display: none;
 }
