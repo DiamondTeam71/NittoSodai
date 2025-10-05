@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
   let startX = 0;
   let isDragging = false;
 
-  // ================= Language Selector =================
   profileBtnEl.addEventListener('click', e => {
       e.preventDefault();
       popupMenuEl.style.display = popupMenuEl.style.display === 'flex' ? 'none' : 'flex';
@@ -40,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
       e.preventDefault();
       setActiveBtn(bnBtn);
       popupMenuEl.style.display = 'none';
-      window.location.href = 'index.html'; // বাংলা মূল পেজে রিডাইরেক্ট
+      window.location.href = '#';
   });
 
   enBtn.addEventListener('click', e => {
@@ -50,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function () {
       window.location.href = 'https://translate.google.com/translate?sl=auto&tl=en&u=' + encodeURIComponent(window.location.href);
   });
 
-  // ================= Modal (Developer/Seller) =================
   function generateContactLinks(type, link1, mail, whatsapp, youtube, facebook) {
       let icon1 = type === "developer"
           ? `<a href="${link1}" target="_blank" style="color:#2980b9; font-size:20px;"><i class="fas fa-globe"></i></a>`
@@ -119,7 +117,6 @@ document.addEventListener('DOMContentLoaded', function () {
   contactBtnEl.addEventListener('click', e => { e.stopPropagation(); contactMenuEl.classList.toggle('active'); });
   document.addEventListener('click', e => { if (!contactMenuEl.contains(e.target)) contactMenuEl.classList.remove('active'); });
 
-  
   function updateSlide() {
       track.style.transition = 'transform 0.5s ease';
       track.style.transform = `translateX(-${currentIndex * 100}%)`;
@@ -160,7 +157,6 @@ document.addEventListener('DOMContentLoaded', function () {
       slideInterval = setInterval(() => { currentIndex = (currentIndex + 1) % slides.length; updateSlide(); }, 3000);
   });
 
-  
   function updateCartCount() {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
       const countSpan = document.getElementById('cart-count');
