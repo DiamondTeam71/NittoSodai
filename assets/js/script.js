@@ -88,28 +88,10 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   document.getElementById("seller-btn").addEventListener("click", e => {
-      e.preventDefault();
-      popupMenuEl.style.display = 'none';
-      modal.style.display = "flex";
-      modalTitle.innerText = "পণ্য বিক্রাতা এর তথ্য!";
-      modalImg.src = "assets/images/seller.jpg";
-      const infoDiv = document.getElementById("info-text");
-      const linksDiv = document.getElementById("contact-links");
-      infoDiv.innerHTML = `<p><i class="fas fa-store" style="color:#e67e22;"></i> <strong>নাম:</strong> মো. মতিউর রহমান সাবিরিন (মূল প্রতিষ্ঠাতা) </p>
-          <p><i class="fas fa-box" style="color:#2ecc71;"></i> <strong>প্রোডাক্ট:</strong> চাল, ডাল, তেল, চিনি, নুডলস, বিস্কুট, এবং অন্যান্য গ্রোসারি সামগ্রী</p>
-          <p><i class="fas fa-map-marker-alt" style="color:#3498db;"></i> <strong>ঠিকানা:</strong> Sylhet Division, Sunamganj Sadar Upazila, Bangladesh</p>
-          <p><i class="fas fa-phone" style="color:#1abc9c;"></i> <strong>যোগাযোগ:</strong> 01300226699</p>
-          <p><i class="fas fa-clock" style="color:#f39c12;"></i> <strong>কার্য সময়:</strong> সকাল ৯টা থেকে রাত ৯টা পর্যন্ত</p>
-          <p><i class="fas fa-truck" style="color:#e67e22;"></i> <strong>সেবা:</strong> সিলেট বিভাগের, সুনামগঞ্জ সদর উপজেলাতে ও তার আশেপাশের এলাকায় দ্রুত হোম ডেলিভারি এবং খুচরা বিক্রয়!</p>`;
-      linksDiv.innerHTML = generateContactLinks(
-          "seller",
-          "https://instagram.com/nittosodai",
-          "nittosodai2025@gmail.com",
-          "8801300226699",
-          "https://youtube.com/channel/sellerxyz",
-          "https://facebook.com/sellerusername"
-      );
-  });
+    e.preventDefault();
+    popupMenuEl.style.display = 'none';
+    window.location.href = 'NittoSodaiAbout.html';
+});
 
   closeBtn.addEventListener("click", () => modal.style.display = "none");
   window.addEventListener("click", e => { if (e.target === modal) modal.style.display = "none"; });
