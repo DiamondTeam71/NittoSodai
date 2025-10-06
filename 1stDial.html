@@ -100,6 +100,16 @@ function updateCartCount() {
 
 updateCartCount();
 
+function calcDiscountPercent(originalPrice, discountAmount) {
+    if (originalPrice === 0) return 0;
+    const percent = (discountAmount / originalPrice) * 100;
+    const strPercent = percent.toString();
+    const parts = strPercent.split('.');
+    if (!parts[1]) return parseFloat(percent.toFixed(2));
+    if (parts[1].length <= 2) return parseFloat(percent.toFixed(2));
+    return Math.ceil(percent * 100) / 100;
+}
+
 onValue(ref(db, 'products/sector0'), snapshot => {
     productList.innerHTML = '';
     allProducts = [];
@@ -148,27 +158,18 @@ onValue(ref(db, 'products/sector0'), snapshot => {
             const discountPercent = Number(product.discountPercent) || 0;
 
             let discountedPrice = originalPrice;
-            if (discountAmount > 0) {
-                discountedPrice = originalPrice - discountAmount;
-            } else if (discountPercent > 0) {
-                discountedPrice = originalPrice - Math.round(originalPrice * discountPercent / 100);
-            }
+            if (discountAmount > 0) discountedPrice = originalPrice - discountAmount;
+            else if (discountPercent > 0) discountedPrice = originalPrice - Math.round(originalPrice * discountPercent / 100);
 
-            // Price HTML
             let priceHTML = '';
             if (discountedPrice < originalPrice) {
-                priceHTML = `
-                <div class="fake-input">
-                    <del>৳${originalPrice}</del>
-                    <span class="price-discount">৳${discountedPrice}</span>
-                </div>`;
+                priceHTML = `<div class="fake-input"><del>৳${originalPrice}</del> <span class="price-discount">৳${discountedPrice}</span></div>`;
             } else {
                 priceHTML = `<div class="fake-input">মূল্য: ৳${originalPrice}</div>`;
             }
 
-            // Discount percent display
             const displayDiscountPercent = discountAmount > 0
-                ? Math.round((discountAmount / originalPrice) * 100)
+                ? calcDiscountPercent(originalPrice, discountAmount)
                 : discountPercent;
             const discountHTML = displayDiscountPercent > 0
                 ? `<input type="text" value="ডিসকাউন্ট (%): ${displayDiscountPercent}%" readonly>` 
@@ -194,11 +195,8 @@ onValue(ref(db, 'products/sector0'), snapshot => {
 
             popup.querySelector('.add-to-cart').addEventListener('click', () => {
                 const itemIndex = cart.findIndex(i => i.id === product.id);
-                if (itemIndex > -1) {
-                    cart[itemIndex].quantity = (cart[itemIndex].quantity || 1) + 1;
-                } else {
-                    cart.push({ ...product, quantity: 1, finalPrice: discountedPrice });
-                }
+                if (itemIndex > -1) cart[itemIndex].quantity = (cart[itemIndex].quantity || 1) + 1;
+                else cart.push({ ...product, quantity: 1, finalPrice: discountedPrice });
                 localStorage.setItem('cart', JSON.stringify(cart));
                 updateCartCount();
                 alert("✅ পণ্য কার্টে যোগ করা হয়েছে!");
@@ -210,7 +208,6 @@ onValue(ref(db, 'products/sector0'), snapshot => {
     });
 });
 
-// Search functionality
 searchInput.addEventListener('input', () => {
     const query = searchInput.value.toLowerCase().trim();
     suggestions.innerHTML = '';
@@ -220,11 +217,9 @@ searchInput.addEventListener('input', () => {
     }
     let matchedTags = [];
     allProducts.forEach(p => {
-        if (p.tags) {
-            p.tags.forEach(tag => {
-                if (tag.toLowerCase().startsWith(query) && !matchedTags.includes(tag)) matchedTags.push(tag);
-            });
-        }
+        if (p.tags) p.tags.forEach(tag => {
+            if (tag.toLowerCase().startsWith(query) && !matchedTags.includes(tag)) matchedTags.push(tag);
+        });
     });
     matchedTags.forEach(tag => {
         const div = document.createElement('div');
@@ -237,9 +232,7 @@ searchInput.addEventListener('input', () => {
         });
         suggestions.appendChild(div);
     });
-    if (matchedTags.length === 0) {
-        document.querySelectorAll('.game-card').forEach(c => c.style.display = 'none');
-    }
+    if (matchedTags.length === 0) document.querySelectorAll('.game-card').forEach(c => c.style.display = 'none');
 });
 
 function filterProductsByTag(tag) {

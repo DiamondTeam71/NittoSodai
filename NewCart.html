@@ -2,61 +2,58 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
 <title>নিত্য সদাই - Smart Cart</title>
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <link rel="stylesheet" href="assets/css/styles3.css">
 </head>
+
 <body>
 <header>
  <img src="assets/images/logo.png" alt="Logo" class="header-logo">
   নিত্য <span class="span-all"> সদাই</span>
 </header>
+
 <marquee class="marquee"><i class="fas fa-tags"></i> আজকের বিশেষ অফার! চাল, ডাল, তেল, চিনি সহ সব পণ্যে বিশেষ ছাড় চলছে। দ্রুত অর্ডার করুন!</marquee>
+
 <div class="cart-section">
-    <h2><i class="fas fa-shopping-cart"></i> আপনার কার্ট</h2>
-    <div class="cart-items" id="cart-items">
-        <p id="empty-msg">আপনার কার্টে কোনো পণ্য নেই।</p>
-    </div>
-    <div class="cart-total" id="cart-total">মোট: 0৳</div>
-    <button id="checkout"><i class="fas fa-credit-card"></i> পেমেন্ট করুন</button>
-    <button id="view-orders"><i class="fas fa-eye"></i> অর্ডার দেখুন</button>
-    <button id="download-orders"><i class="fas fa-download"></i> অর্ডার ডাউনলোড করুন</button>
-    <div id="orders-list"></div>
+  <h2><i class="fas fa-shopping-cart"></i> আপনার কার্ট</h2>
+  <div class="cart-items" id="cart-items">
+    <p id="empty-msg">আপনার কার্টে কোনো পণ্য নেই।</p>
+  </div>
+  <div class="cart-total" id="cart-total">মোট: 0৳</div>
+
+  <button id="checkout"><i class="fas fa-credit-card"></i> অর্ডার কনফার্ম করুন</button>
+  <button id="view-orders"><i class="fas fa-eye"></i> অর্ডার দেখুন</button>
+  <button id="download-orders"><i class="fas fa-download"></i> অর্ডার ডাউনলোড করুন</button>
+
+  <div id="orders-list"></div>
 </div>
+
 <div class="modal-overlay" id="checkout-modal">
-    <div class="modal-content">
-        <span class="close-popup" id="close-modal">&times;</span>
-        <h3>Checkout Form (অর্ডার এর পূর্বে পেমেন্ট করতে হবে!)</h3>
-        <form id="checkout-form">
-            <input type="text" id="name" placeholder="Name" required>
-            <textarea id="address" placeholder="Address"></textarea>
-            <textarea id="passion" placeholder="আপনার পেশা"></textarea>
-            <input type="tel" id="mobile" placeholder="Mobile No." required>
-            <input type="email" id="email" placeholder="Email">
-            <select id="payment-method">
-    <option value="bkash">Bkash</option>
-    <option value="nagad">Nagad</option>
-</select>
+  <div class="modal-content">
+    <span class="close-popup" id="close-modal">&times;</span>
+    <h3><i class="fas fa-file-invoice"></i> অর্ডার তথ্য দিন</h3>
 
+    <form id="checkout-form">
+      <input type="text" id="name" placeholder="আপনার নাম" required>
+      <textarea id="address" placeholder="আপনার ঠিকানা" required></textarea>
+      <textarea id="passion" placeholder="আপনার পেশা" required></textarea>
+      <input type="tel" id="mobile" placeholder="মোবাইল নাম্বার" required>
+      
+      <button type="submit"><i class="fas fa-paper-plane"></i> অর্ডার সাবমিট করুন</button>
+    </form>
+  </div>
+</div>
 
-            <div id="payment-info" style="display:none;">
-    <input type="text" id="payment-number" placeholder="আপনার Bkash/Nagad নম্বর">
-    <input type="text" id="transaction-id" placeholder="Transaction ID">
-    <input type="text" id="admin-number" readonly style="margin-top:5px; background:#f0f0f0; cursor:text;">
-</div>
-            <button type="submit">Confirm Order</button>
-        </form>
-    </div>
-</div>
 <div class="contact-menu">
   <div class="contact-btn"><i class="fas fa-comment-dots"></i></div>
   <div class="contact-options">
     <a href="https://wa.me/8801300226699" class="option" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
     <a href="tel:+8801300226699" class="option" title="Call"><i class="fas fa-phone"></i></a>
-    <a href="mailto: nittosodai2025@gmail.com" class="option" title="Email"><i class="fas fa-envelope"></i></a>
+    <a href="mailto:nittosodai2025@gmail.com" class="option" title="Email"><i class="fas fa-envelope"></i></a>
   </div>
 </div>
 
@@ -64,10 +61,11 @@
   <div class="footer-container">
     <div class="footer-left">
       <h2><img src="assets/images/logo.png" alt="Logo" class="footer-logo"> নিত্য <span class="span-all">সদাই</span> — উইথ সাবিরিন</h2>
-      <p><i class="fas fa-copyright"></i> এই সাইটের কোনো অংশ বা Ui বা ডিজাইন কপি করা হলে তার বিরুদ্ধে একশন নেওয়া হবে! | Created By <a href="https://XrabonProgrammer.netlify.app/"><span>Xrabon</span></a></p>
+      <p><i class="fas fa-copyright"></i> এই সাইটের কোনো অংশ বা Ui বা ডিজাইন কপি করা হলে তার বিরুদ্ধে একশন নেওয়া হবে! | Created By 
+        <a href="https://XrabonProgrammer.netlify.app/"><span>Xrabon</span></a></p>
     </div>
     <div class="footer-right">
-      <a href="https://m.facebook.com/nittosodai.coms/"><i class="fab fa-facebook-f"></i></a>      
+      <a href="https://m.facebook.com/nittosodai.coms/"><i class="fab fa-facebook-f"></i></a>          
       <a href="https://www.instagram.com/nittosodai.coms/"><i class="fab fa-instagram"></i></a>
       <a href="https://youtube.com/@nittosodai-sabirin?si=eaj5s_bIryV8kizA"><i class="fab fa-youtube"></i></a>
     </div>
@@ -75,9 +73,9 @@
 </footer>
 
 <div class="navbar">
-  <a href="index.html" class="nav-item active"><i class="fa-solid fa-house"></i> হোম
+  <a class='nav-item active' href='/'><i class="fa-solid fa-house"></i> হোম</a>
   <a href="#" class="nav-item" id="profile-btn"><i class="fa-solid fa-globe"></i> ভাষা সিলেক্টর</a>
-  <a href="NewCart.html" class="nav-item"><i class="fa-solid fa-cart-arrow-down"></i> <span id="cart-count"></span> কার্টস
+  <a class='nav-item' href='/newcart'><i class="fa-solid fa-cart-arrow-down"></i> <span id="cart-count"></span> কার্টস</a>
   <a href="#" class="nav-item" id="developer-btn"><i class="fas fa-sitemap"></i> সাইট নির্মাতা</a>
   <a href="#" class="nav-item" id="seller-btn"><i class="fas fa-user"></i> পণ্য বিক্রেতা</a>
 </div>
@@ -92,222 +90,314 @@
     <span class="close-btn">&times;</span>
     <img id="modal-img" class="modal-img" src="">
     <h2 id="modal-title"></h2>
-    <div class="modal-text" id="modal-text">     
-    </div>
+    <div class="modal-text" id="modal-text"></div>
   </div>
 </div>
+
 <script src="assets/js/script.js"></script>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getDatabase, ref, push, onValue, set, update, remove, runTransaction } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+import { getDatabase, ref, push, onValue, update, runTransaction, get } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 import { firebaseConfig } from './assets/Firebase-Config/FirebaseConfig.js';
+
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-let adminNumbers = {};
 let userId = localStorage.getItem('userId');
-if(!userId){ userId = 'user_'+Math.random().toString(36).substr(2, 9); localStorage.setItem('userId', userId); }
+if (!userId) {
+    userId = 'user_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('userId', userId);
+}
 
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 const cartItems = document.getElementById('cart-items');
 const cartTotal = document.getElementById('cart-total');
 const emptyMsg = document.getElementById('empty-msg');
-const placeholderImg = 'https://via.placeholder.com/150?text=Not+Found';
-
 const checkoutModal = document.getElementById('checkout-modal');
 const checkoutBtn = document.getElementById('checkout');
 const closeModal = document.getElementById('close-modal');
-const paymentMethodEl = document.getElementById('payment-method');
-const paymentInfoEl = document.getElementById('payment-info');
-const paymentNumberEl = document.getElementById('payment-number');
-const transactionIdEl = document.getElementById('transaction-id');
-const adminNumberEl = document.getElementById('admin-number');
 const checkoutForm = document.getElementById('checkout-form');
 const viewOrdersBtn = document.getElementById('view-orders');
 const ordersList = document.getElementById('orders-list');
 
-const paymentRef = ref(db,'paymentNumbers/');
-onValue(paymentRef, snapshot=>{
-    adminNumbers = snapshot.val() || {};
-    paymentMethodEl.innerHTML = '';
-    Object.keys(adminNumbers).forEach(method=>{
-        const opt = document.createElement('option');
-        opt.value = method;
-        opt.textContent = method.charAt(0).toUpperCase()+method.slice(1);
-        paymentMethodEl.appendChild(opt);
-    });
-    const method = paymentMethodEl.value;
-    if(method==='cod'){
-        paymentInfoEl.style.display='none';
-        adminNumberEl.value='';
-    } else {
-        paymentInfoEl.style.display='block';
-        adminNumberEl.value = adminNumbers[method] || '';
-        paymentNumberEl.placeholder = `আপনার ${method.charAt(0).toUpperCase()+method.slice(1)} নম্বর`;
-    }
-});
+const placeholderImg = 'https://via.placeholder.com/150?text=Not+Found';
+let adminPayments = {};
 
-function renderCart(){
-    cartItems.innerHTML='';
-    if(cart.length===0){ emptyMsg.style.display='block'; cartTotal.textContent='মোট: 0৳'; return; }
-    emptyMsg.style.display='none';
-    cart.forEach((item,index)=>{
-        const card = document.createElement('div'); card.className='cart-card';
-        const price = parseFloat(item.price)||0;
-        const qty = parseInt(item.qty)||1;
+function loadAdminPayments() {
+    const paymentRef = ref(db, 'paymentNumbers/');
+    get(paymentRef).then(snapshot => {
+        adminPayments = snapshot.val() || {};
+    });
+}
+loadAdminPayments();
+
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function renderCart() {
+    cartItems.innerHTML = '';
+    if (cart.length === 0) {
+        emptyMsg.style.display = 'block';
+        cartTotal.textContent = 'মোট: 0৳';
+        return;
+    }
+    emptyMsg.style.display = 'none';
+
+    cart.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'cart-card';
+        const price = parseFloat(item.price) || 0;
+        const qty = parseInt(item.qty) || 1;
         let finalPrice = price;
-        if(item.discountPercent>0) finalPrice -= Math.round(price*item.discountPercent/100);
-        else if(item.discountAmount>0) finalPrice -= item.discountAmount;
-        const mediaSrc = item.media ? item.media : placeholderImg;
-        let mediaHTML = ''; 
-        if(mediaSrc.match(/\.(jpeg|jpg|gif|png|webp)$/i)) mediaHTML = `<img src="${mediaSrc}">`; 
-        else if(mediaSrc.match(/\.(mp4|webm|ogg)$/i)) mediaHTML = `<video src="${mediaSrc}" controls width="80"></video>`; 
-        else mediaHTML = `<img src="${placeholderImg}">`;
-        const priceHTML = (finalPrice < price) ? `<del>৳${price}</del> <span style="font-weight:bold;">৳${finalPrice}</span>` : `৳${price}`;
-        card.innerHTML=`${mediaHTML}<div><div class="card-title">${item.name || 'No Name'}</div><div class="card-sub">${item.brand || ''} | ${item.weight || ''}</div><div class="card-price">${priceHTML} x ${qty}</div><div class="quantity-controls"><button class="minus">-</button><span class="qty">${qty}</span><button class="plus">+</button></div><button class="remove-btn">Remove</button></div>`;
-        card.querySelector('.plus').addEventListener('click', ()=>{ item.qty = qty+1; renderCart(); });
-        card.querySelector('.minus').addEventListener('click', ()=>{ item.qty = Math.max(1, qty-1); renderCart(); });
-        card.querySelector('.remove-btn').addEventListener('click', ()=>{ cart.splice(index,1); saveCart(); renderCart(); });
+        if (item.discountPercent > 0)
+            finalPrice -= Math.round(price * item.discountPercent / 100);
+        else if (item.discountAmount > 0)
+            finalPrice -= item.discountAmount;
+
+        const mediaSrc = item.media || placeholderImg;
+        const isImage = /\.(jpeg|jpg|gif|png|webp)$/i.test(mediaSrc);
+        const mediaHTML = isImage
+            ? `<img src="${mediaSrc}">`
+            : `<video src="${mediaSrc}" controls width="80"></video>`;
+        const priceHTML = (finalPrice < price)
+            ? `<del>৳${price}</del> <span style="font-weight:bold;">৳${finalPrice}</span>`
+            : `৳${price}`;
+
+        card.innerHTML = `
+        ${mediaHTML}
+        <div>
+            <div class="card-title">${item.name || 'No Name'}</div>
+            <div class="card-sub">${item.brand || ''} | ${item.weight || ''}</div>
+            <div class="card-price">${priceHTML} x ${qty}</div>
+            <div class="quantity-controls">
+                <button class="minus">-</button>
+                <span class="qty">${qty}</span>
+                <button class="plus">+</button>
+            </div>
+            <button class="remove-btn">মুছুন</button>
+        </div>`;
+
+        card.querySelector('.plus').addEventListener('click', () => {
+            item.qty = qty + 1;
+            renderCart();
+        });
+
+        card.querySelector('.minus').addEventListener('click', () => {
+            item.qty = Math.max(1, qty - 1);
+            renderCart();
+        });
+
+        card.querySelector('.remove-btn').addEventListener('click', () => {
+            cart.splice(index, 1);
+            saveCart();
+            renderCart();
+        });
+
         cartItems.appendChild(card);
     });
+
     updateTotal();
 }
 
-function updateTotal(){
+function updateTotal() {
     let total = 0;
-    cart.forEach(item=>{
-        const price = parseFloat(item.price)||0;
-        const qty = parseInt(item.qty)||1;
+    cart.forEach(item => {
+        const price = parseFloat(item.price) || 0;
+        const qty = parseInt(item.qty) || 1;
         let finalPrice = price;
-        if(item.discountPercent>0) finalPrice -= Math.round(price*item.discountPercent/100);
-        else if(item.discountAmount>0) finalPrice -= item.discountAmount;
+        if (item.discountPercent > 0)
+            finalPrice -= Math.round(price * item.discountPercent / 100);
+        else if (item.discountAmount > 0)
+            finalPrice -= item.discountAmount;
         total += finalPrice * qty;
     });
-    const delivery = total>=1000 ? 0 : 50;
-    cartTotal.textContent = total>=1000 ? `মোট: ${total}৳ (Delivery Free)` : `মোট: ${total+delivery}৳ (Delivery: ${delivery}৳)`;
+
+    const delivery = total >= 1000 ? 0 : 50;
+    cartTotal.textContent = total >= 1000
+        ? `মোট: ${total}৳ (ডেলিভারি ফ্রি)`
+        : `মোট: ${total + delivery}৳ (ডেলিভারি: ${delivery}৳)`;
     saveCart();
 }
 
-function saveCart(){ localStorage.setItem('cart', JSON.stringify(cart)); }
 renderCart();
 
-checkoutBtn.addEventListener('click', ()=>{ if(cart.length===0){ alert("কার্ট খালি!"); return; } checkoutModal.style.display='flex'; });
-closeModal.addEventListener('click', ()=> checkoutModal.style.display='none');
-
-paymentMethodEl.addEventListener('change', e=>{
-    const method = e.target.value;
-    if(method==='cod'){
-        paymentInfoEl.style.display='none';
-        adminNumberEl.value='';
-    } else {
-        paymentInfoEl.style.display='block';
-        adminNumberEl.value = adminNumbers[method] || '';
-        paymentNumberEl.placeholder = `আপনার ${method.charAt(0).toUpperCase()+method.slice(1)} নম্বর`;
-    }
+checkoutBtn.addEventListener('click', () => {
+    if (cart.length === 0) { alert("কার্ট খালি!"); return; }
+    checkoutModal.style.display = 'flex';
 });
 
-function getNextOrderId(callback){
+closeModal.addEventListener('click', () => checkoutModal.style.display = 'none');
+
+function getNextOrderId(callback) {
     const counterRef = ref(db, 'orderCounter');
-    runTransaction(counterRef, current=>{ if(current===null) return 1; return current+1; })
-    .then(result=>{ const nextId = result.snapshot.val(); callback(nextId); })
-    .catch(err=>{ console.error(err); callback(Date.now()); });
+    runTransaction(counterRef, current => current === null ? 1 : current + 1)
+        .then(result => callback(`#${result.snapshot.val()}`))
+        .catch(() => callback(`#${Date.now()}`));
 }
 
-checkoutForm.addEventListener('submit', (e)=>{
+checkoutForm.addEventListener('submit', e => {
     e.preventDefault();
-    if(cart.length===0){ alert("কার্ট খালি!"); return; }
+    if (cart.length === 0) { alert("কার্ট খালি!"); return; }
+
     let total = 0;
-    cart.forEach(item=>{
-        const price = parseFloat(item.price)||0;
-        const qty = parseInt(item.qty)||1;
+    cart.forEach(item => {
+        const price = parseFloat(item.price) || 0;
+        const qty = parseInt(item.qty) || 1;
         let finalPrice = price;
-        if(item.discountPercent>0) finalPrice -= Math.round(price*item.discountPercent/100);
-        else if(item.discountAmount>0) finalPrice -= item.discountAmount;
+        if (item.discountPercent > 0)
+            finalPrice -= Math.round(price * item.discountPercent / 100);
+        else if (item.discountAmount > 0)
+            finalPrice -= item.discountAmount;
         total += finalPrice * qty;
     });
-    const delivery = total>=1000 ? 0 : 50;
-    const userPaymentMethod = paymentMethodEl.value;
-    const paymentNumber = paymentNumberEl.value;
-    const transactionId = transactionIdEl.value;
 
-    getNextOrderId(orderNumber=>{
-        const displayOrderId = `#${orderNumber}`;
+    const delivery = total >= 1000 ? 0 : 50;
+    const name = document.getElementById('name').value;
+    const address = document.getElementById('address').value;
+    const passion = document.getElementById('passion').value;
+    const mobile = document.getElementById('mobile').value;
+
+    getNextOrderId(orderId => {
         const orderData = {
-            orderId: displayOrderId,
-            cart: cart,
-            total: total,
-            delivery: delivery,
-            name: document.getElementById('name').value,
-            address: document.getElementById('address').value,
-            passion: document.getElementById('passion').value,
-            mobile: document.getElementById('mobile').value,
-            email: document.getElementById('email').value,
-            paymentMethod: userPaymentMethod,
-            paymentNumber: userPaymentMethod==='cod'?'':paymentNumber,
-            transactionId: userPaymentMethod==='cod'?'':transactionId,
+            orderId,
+            cart,
+            total,
+            delivery,
+            name,
+            address,
+            passion,
+            mobile,
+            accountType: "Wait For Payment",
+            accountNumber: "Wait For Payment",
             timestamp: new Date().toISOString(),
-            approved: false,
-            userId: userId
+            approved: "pending",
+            userId
         };
-        push(ref(db,'orders/'), orderData).then(()=>{
-            cart = [];
-            saveCart();
-            renderCart();
-            checkoutModal.style.display='none';
-            checkoutForm.reset();
-            alert(`অর্ডার সাবমিট হয়েছে! আপনার অর্ডার নাম্বার: ${displayOrderId}`);
-        }).catch(()=> alert('কিছু সমস্যা হয়েছে। আবার চেষ্টা করুন।'));
+
+        push(ref(db, 'orders/'), orderData)
+            .then(() => {
+                cart = [];
+                saveCart();
+                renderCart();
+                checkoutModal.style.display = 'none';
+                checkoutForm.reset();
+                alert(`✅ অর্ডার সাবমিট হয়েছে!\nঅর্ডার নং: ${orderId}`);
+            })
+            .catch(() => alert('❌ কিছু সমস্যা হয়েছে, আবার চেষ্টা করুন।'));
     });
 });
 
-viewOrdersBtn.addEventListener('click', ()=>{
-    ordersList.innerHTML='লোড হচ্ছে...';
-    const ordersRef = ref(db,'orders/');
-    onValue(ordersRef, snapshot=>{
+viewOrdersBtn.addEventListener('click', () => {
+    ordersList.innerHTML = 'লোড হচ্ছে...';
+    onValue(ref(db, 'orders/'), snapshot => {
         const allOrders = snapshot.val();
-        if(!allOrders){ ordersList.innerHTML='কোনো অর্ডার নেই।'; return; }
-        const userOrders = Object.values(allOrders).filter(o=>o.userId===userId);
-        if(userOrders.length===0){ ordersList.innerHTML='আপনার কোনো অর্ডার নেই।'; return; }
-        ordersList.innerHTML='';
-        userOrders.forEach(order=>{
-            const orderDate = new Date(order.timestamp);
-            const formattedDate = orderDate.toLocaleString('bn-BD',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
-            let itemsHTML='';
-            order.cart.forEach(item=>{
-                const price=parseFloat(item.price)||0;
-                const qty=parseInt(item.qty)||1;
-                let finalPrice=price;
-                if(item.discountPercent>0) finalPrice -= Math.round(price*item.discountPercent/100);
-                else if(item.discountAmount>0) finalPrice -= item.discountAmount;
-                const priceHTML = (finalPrice<price)? `<del>৳${price}</del> <span style="font-weight:bold;color:green;">৳${finalPrice}</span>`:`৳${price}`;
-                const mediaSrc = item.media ? item.media : placeholderImg;
-                const imgHTML = `<img src="${mediaSrc}" style="width:80px;height:80px;object-fit:cover;border-radius:10px;margin-right:10px;border:2px solid #000;">`;
-                itemsHTML += `<div class="order-item" style="display:flex;align-items:center;margin:8px 0;padding:5px;border-bottom:1px solid #ccc;">${imgHTML}<div><div style="font-weight:bold;font-size:16px;">${item.name}</div><div style="font-size:14px;">${priceHTML} x ${qty}</div></div></div>`;
+        if (!allOrders) { ordersList.innerHTML = 'কোনো অর্ডার নেই।'; return; }
+
+        const userOrders = Object.entries(allOrders)
+            .map(([key, val]) => ({ key, ...val }))
+            .filter(o => o.userId === userId);
+
+        if (userOrders.length === 0) { ordersList.innerHTML = 'আপনার কোনো অর্ডার নেই।'; return; }
+
+        ordersList.innerHTML = '';
+        userOrders.reverse().forEach(order => {
+            const orderDate = new Date(order.timestamp).toLocaleString('bn-BD', {
+                day: '2-digit', month: 'short', year: 'numeric',
+                hour: '2-digit', minute: '2-digit'
             });
-            const adminNumber = adminNumbers[order.paymentMethod] || '';
+
+            let itemsHTML = '';
+            order.cart.forEach(item => {
+                const price = parseFloat(item.price) || 0;
+                const qty = parseInt(item.qty) || 1;
+                let finalPrice = price;
+                if (item.discountPercent > 0)
+                    finalPrice -= Math.round(price * item.discountPercent / 100);
+                else if (item.discountAmount > 0)
+                    finalPrice -= item.discountAmount;
+                const priceHTML = (finalPrice < price)
+                    ? `<del>৳${price}</del> <span style="font-weight:bold;color:green;">৳${finalPrice}</span>`
+                    : `৳${finalPrice}`;
+                const imgHTML = `<img src="${item.media || placeholderImg}" style="width:80px;height:80px;object-fit:cover;border-radius:10px;margin-right:10px;border:2px solid #000;">`;
+                itemsHTML += `<div class="order-item" style="display:flex;align-items:center;margin:8px 0;padding:5px;border-bottom:1px solid #ccc;">
+                  ${imgHTML}<div><div style="font-weight:bold;font-size:16px;">${item.name}</div>
+                  <div style="font-size:14px;">${priceHTML} x ${qty}</div></div></div>`;
+            });
+
+            const paymentButton = (!order.approved || order.approved === "pending") && Object.keys(adminPayments).length > 0
+                ? `<button class="pay-now-btn" style="padding:10px 15px;border:none;border-radius:8px;background:#28a745;color:#fff;cursor:pointer;" data-key="${order.key}"><i class="fas fa-money-bill-wave"></i> পেমেন্ট করুন</button>`
+                : '';
+
+            let statusText = order.approved === "approved" ? '✅ কনফার্ম হয়েছে'
+                            : order.approved === "disapproved" ? '❌ বাতিল হয়েছে'
+                            : '⏳ পেমেন্ট অপেক্ষায়';
+
             ordersList.innerHTML += `
-    <div class="order-card" style="padding:10px;background:#fff;margin-bottom:12px;border-radius:25px;border:4px solid black;box-shadow:0 1px 5px rgba(0,0,0,0.1);">
-        <div class="order-card-header" style="display:flex;justify-content:space-between;margin-bottom:8px;">
-            <h4>অর্ডার নং: ${order.orderId}</h4>
-            <h4>মোট: ৳${order.total+order.delivery}</h4>
-        </div>
-        ${itemsHTML}
-        <div class="order-footer" style="font-size:14px;color:#555;">
-            <div>ডেলিভারি চার্জ: ৳${order.delivery}</div>
-            <div>নাম: ${order.name}</div>
-            <div>মোবাইল: ${order.mobile}</div>
-            <div>পেমেন্ট মাধ্যম: ${order.paymentMethod}</div>
-            ${order.paymentMethod!=='cod'?`<div>টাকা পাঠাবেন: ${adminNumber}</div>`:''}
-            ${order.paymentMethod!=='cod'?`<div>Transaction ID: ${order.transactionId}</div>`:''}
-            <div>অর্ডার সময়: ${formattedDate}</div>
-            <div class="order-status" style="font-weight:600;">স্ট্যাটাস: ${order.approved?'Approved ✅':'Pending ⏳'}</div>
-            <div style="margin-top:8px;font-size:12px;color:#999;">Developed by <a href="https://xrabon.netlify.app/" target="_blank">Xrabon</a></div>
-        </div>
-    </div>
-`;
-});
-});
+            <div class="order-card" style="padding:10px;background:#fff;margin-bottom:12px;border-radius:25px;border:4px solid black;">
+              <div class="order-card-header" style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                <h4>অর্ডার নং: ${order.orderId}</h4>
+                <h4>মোট: ৳${order.total + order.delivery}</h4>
+              </div>
+              ${itemsHTML}
+              <div class="order-footer" style="font-size:14px;color:#555;">
+                <div>ডেলিভারি চার্জ: ৳${order.delivery}</div>
+                <div>নাম: ${order.name}</div>
+                <div>মোবাইল: ${order.mobile}</div>
+                <div>পেশা: ${order.passion}</div>
+                <div>একাউন্ট টাইপ: ${order.accountType}</div>
+                <div>একাউন্ট নাম্বার: ${order.accountNumber}</div>
+                <div>অর্ডার সময়: ${orderDate}</div>
+                <div class="order-status" style="font-weight:600;">স্ট্যাটাস: ${statusText}</div>
+                ${paymentButton}
+              </div>`;
+        });
+
+        document.querySelectorAll('.pay-now-btn').forEach(btn => {
+            btn.addEventListener('click', e => {
+                const orderKey = e.currentTarget.dataset.key;
+
+                const paymentOptions = Object.entries(adminPayments).map(([method, number]) => {
+                    return `<option value="${method}">${method} - ${number}</option>`;
+                }).join('');
+
+                const popup = document.createElement('div');
+                popup.style = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:center;z-index:9999;';
+                popup.innerHTML = `
+                <div style="background:#fff;padding:20px;border-radius:15px;width:90%;max-width:400px;position:relative;border: 4px solid black;">
+                  <span id="close-popup" style="position:absolute;top:10px;right:15px;font-size:22px;cursor:pointer;">&times;</span>
+                  <h3><i class="fas fa-money-bill-wave"></i> পেমেন্ট করুন</h3>
+                  <select id="payment-method-select" style="width:100%;padding:10px;margin:15px 0;border-radius:8px;border:1px solid #ccc;">
+                    <option value="">-- মাধ্যম নির্বাচন করুন (নাম্বার দেওয়া আছে) --</option>
+                    ${paymentOptions}
+                  </select>
+                  <input type="text" id="user-account-number" placeholder="আপনার নাম্বার লিখুন" style="width:100%;padding:10px;margin-bottom:15px;border-radius:8px;border:1px solid #ccc;">
+                  <button id="confirm-payment-btn" style="width:100%;padding:10px;background:#28a745;color:#fff;border:none;border-radius:8px;font-size:16px;"><i class="fas fa-check-circle"></i> পেমেন্ট নিশ্চিত করুন</button>
+                </div>`;
+                document.body.appendChild(popup);
+
+                popup.querySelector('#close-popup').addEventListener('click', () => popup.remove());
+
+                popup.querySelector('#confirm-payment-btn').addEventListener('click', () => {
+                    const method = popup.querySelector('#payment-method-select').value;
+                    const number = popup.querySelector('#user-account-number').value.trim();
+                    if (!method) return alert('মাধ্যম নির্বাচন করুন!');
+                    if (!number) return alert('আপনার নাম্বার লিখুন!');
+
+                    update(ref(db, 'orders/' + orderKey), {
+                        accountType: method,
+                        accountNumber: number,
+                        approved: "pending"
+                    }).then(() => {
+                        alert('✅ পেমেন্ট তথ্য পাঠানো হয়েছে! এডমিন নিশ্চিত করলে কনফার্ম হবে।');
+                        popup.remove();
+                    }).catch(() => alert('❌ কিছু সমস্যা হয়েছে, আবার চেষ্টা করুন।'));
+                });
+            });
+        });
+    });
 });
 </script>
 </body>
