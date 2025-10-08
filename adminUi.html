@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - নিত্য সদাই</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-weight: bold;
+}
+
+body {
+    background: linear-gradient(135deg, #f0f2f5, #e3f2fd);
+    min-height: 100vh;
+    transition: 0.4s;
+}
+
+body.dark {
+    background: linear-gradient(135deg, #1e1e2f, #121212);
+    color: white;
+}
+
+header {
+    background: linear-gradient(90deg, #ff0000, #cc0000);
+    color: white;
+    font-size: 28px;
+    text-align: center;
+    padding: 20px;
+    border-top: 4px solid black;
+    border-bottom: 4px solid black;
+    font-weight: 700;
+    position: relative;
+}
+
+header i {
+    color: aqua;
+    margin-right: 10px;
+}
+
+.theme-toggle {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: 0.3s;
+}
+
+.theme-toggle:hover {
+    transform: rotate(180deg);
+}
+
+.admin-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    padding: 0 10px;
+}
+
+section h2 {
+    font-size: 24px;
+    color: red;
+    margin-bottom: 15px;    
+    padding-bottom: 5px;
+    border: 4px solid black;
+    border-radius: 37px;
+    font-weight: bold;
+    padding: 10px;
+    display: flex;
+    align-items: center;       
+    justify-content: center;   
+    gap: 10px;
+}
+.payment-numbers {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.payment-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 8px 10px;
+  border-radius: 18px;
+  border: 4px solid black;
+  backdrop-filter: blur(10px);
+  width: fit-content;
+  margin: 0 auto; 
+}
+.payment-wrapper img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 4px solid black;
+    margin-right: 5px;
+}
+
+.payment-numbers input {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 34px;
+    background: rgba(255, 255, 255, 0.8);
+    width: 180px;
+    font-weight: 600;
+    color: #000;
+    border: 4px solid black;
+    outline: none;
+}
+
+.payment-numbers .delete-btn {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border: 4px solid black;
+    border-radius: 50%;
+    background: #ff4d4d;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;            
+    justify-content: center;
+    align-items: center;
+}
+
+.payment-numbers .delete-btn:hover {
+    background: #d32f2f;
+    transform: scale(1.1);
+}
+
+.btn-container, .sort-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#add-payment-method,
+#save-numbers {
+    padding: 12px 25px;
+    border: 4px solid black;
+    border-radius: 28px;
+    background: linear-gradient(45deg, #4caf50, #2e7d32);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-right: 10px;
+}
+
+#add-payment-method:hover,
+#save-numbers:hover {
+    background: linear-gradient(45deg, #66bb6a, #1b5e20);
+    transform: translateY(-2px);
+}
+
+.grid-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.order-card {
+    width: 100%;
+    border-radius: 38px;
+    border: 4px solid black;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    transition: 0.3s;
+}
+
+body.dark .order-card {
+    background: rgba(40, 40, 40, 0.8);
+    border-color: #444;
+}
+
+.order-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.order-actions button {
+    border: none;
+    background: none;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: 0.3s;
+}
+
+.order-actions button:hover {
+    transform: scale(1.3);
+}
+
+.order-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 5px 8px;
+    border-radius: 28px;
+    border: 4px solid black;
+}
+
+.order-item img {
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 4px solid black;
+    padding: 10px;
+}
+
+.order-item div p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.order-footer {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.order-footer p {
+    margin: 2px 0;
+}
+
+#order-search {
+    padding: 12px;
+    border: 4px solid black;
+    border-radius: 28px;
+    margin-bottom: 15px;
+    width: 100%;
+    font-weight: 600;
+    outline: none;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(6px);
+    transition: 0.3s;
+}
+
+#order-search:focus {
+    border-color: red;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+}
+
+.sort-buttons {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.sort-buttons button {
+    padding: 8px 15px;
+    border: 4px solid black;
+    border-radius: 18px;
+    background: #1976d2;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.sort-buttons button:hover {
+    background: #0d47a1;
+}
+
+.status-pending {
+    background: #e0e0e0;
+}
+
+.status-approved {
+    background: #c8e6c9;
+}
+
+.status-disapproved {
+    background: #ffcdd2;
+}
+
+.copy-btn {
+    cursor: pointer;
+    color: #1976d2;
+    margin-left: 8px;
+}
+
+@media (max-width: 768px) {
+    .grid-list {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (min-width: 1024px) {
+    body {
+        font-size: 18px;
+    }
+
+    header {
+        font-size: 38px;
+        padding: 30px 0;
+        letter-spacing: 1px;
+    }
+
+    .admin-container {
+        max-width: 1600px;
+        gap: 80px;
+        padding: 0 60px;
+    }
+
+    section h2 {
+        font-size: 32px;
+        border-width: 5px;
+        padding: 16px 28px;
+    }
+
+    .payment-wrapper {
+        gap: 20px;
+        padding: 18px 28px;
+        border-radius: 28px;
+    }
+
+    .payment-numbers input {
+        width: 280px;
+        font-size: 18px;
+        padding: 10px 18px;
+    }
+
+    #add-payment-method,
+    #save-numbers {
+        font-size: 20px;
+        padding: 16px 45px;
+        margin-right: 20px;
+        border-width: 5px;
+    }
+
+    .btn-container {
+        justify-content: center;
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .grid-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+        justify-items: center;
+    }
+
+    .order-card {
+        width: 90%;
+        padding: 35px;
+        border-radius: 46px;
+        font-size: 18px;
+        transition: 0.3s ease;
+    }
+
+    .order-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .order-header {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .order-item img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .order-item div p {
+        font-size: 17px;
+    }
+
+    .order-footer {
+        font-size: 17px;
+    }
+
+    #order-search {
+        width: 60%;
+        font-size: 18px;
+        margin: 0 auto 30px auto;
+        display: block;
+        border-width: 5px;
+        padding: 15px;
+    }
+
+    .sort-buttons {
+        justify-content: center;
+        gap: 25px;
+    }
+
+    .sort-buttons button {
+        font-size: 18px;
+        padding: 12px 28px;
+        border-radius: 22px;
+    }
+}
+</style>
+</head>
+<body>
+<header>
+  <i class="fas fa-tools"></i> নিত্য <span>সদাই</span> - Admin Panel
+</header>
+
+<div class="admin-container">
+  <section class="payment-section">
+    <h2><i class="fas fa-credit-card"></i> Payment Numbers</h2>
+    <div id="payment-fields" class="payment-numbers"></div>
+    
+    <div class="btn-container">
+    <button id="add-payment-method">Add Payment Method</button>
+    <button id="save-numbers">Save All</button>
+    </div>
+  </section>
+  <div id="header" class="header">
+  <h2>Admin Dashboard</h2>
+  <div class="header-right">
+    <p id="currentUser">লগইন ইউজার: ...</p>
+    <button id="logoutBtn">লগআউট</button>
+  </div>
+</div>
+
+<style>
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    border-radius: 24px;
+    border: 4px solid red;
+    margin-top: 10px;
+    background: #2c3e50;
+    color: #ecf0f1;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+
+  .header h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  #currentUser {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  #logoutBtn {
+    padding: 7px 16px;
+    background: skyblue;
+    color: #fff;
+    border: 4px solid black;
+    border-radius: 18px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    font-weight: bold;
+  }
+
+  #logoutBtn:hover {
+    background: #c0392b;
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 500px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .header-right {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+</style>
+
+  <section class="orders-section">
+    <h2><i class="fas fa-shopping-basket"></i> Orders</h2>
+    <input type="text" id="order-search" placeholder="Search by Order Number...">
+    <div class="sort-buttons">
+      <button data-sort="newest">Newest</button>
+      <button data-sort="oldest">Oldest</button>
+      <button data-sort="pending">Pending</button>
+      <button data-sort="approved">Approved</button>
+    </div>
+    <div id="orders-list" class="grid-list"></div>
+  </section>
+</div>
+
+<script type="module" src="assets/Js/script4.js">
+</script>
+</body>
+</html>
