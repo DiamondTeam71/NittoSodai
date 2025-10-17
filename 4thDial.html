@@ -8,11 +8,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="assets/css/styles2.css">
+<link rel="stylesheet" href="assets/css/styles22.css">
 <style>
+ 
 
 </style>
 </head>
 <body>
+  
+<div id="preloader">
+  <div class="preloader-content">
+    <img src="assets/images/logo.png" alt="Logo" class="preloader-logo">
+    <div class="loader"></div>
+    <div class="typing-text"><span class="text"></span><span class="cursor">|</span></div>
+  </div>
+</div>
+ 
 <header>
  <img src="assets/images/logo.png" alt="Logo" class="header-logo">
   নিত্য <span class="span-all"> সদাই</span>
@@ -20,7 +31,7 @@
 <marquee><i class="fas fa-tags"></i> আজকের বিশেষ অফার! চাল, ডাল, তেল, চিনি সহ সব পণ্যে বিশেষ ছাড় চলছে। দ্রুত অর্ডার করুন!</marquee>
 
 <div class="search-box">
-  <input type="text" id="searchInput" placeholder="পণ্য বা ট্যাগস খুঁজুন...">
+  <input type="text" id="searchInput" placeholder="🔍 পণ্য বা ট্যাগস খুঁজুন...">
   <div class="suggestions" id="suggestions"></div>
 </div>
 
@@ -56,7 +67,9 @@
   <a href="index.html" class="nav-item active"><i class="fa-solid fa-house"></i> হোম</a>
   <a href="#" class="nav-item" id="profile-btn"><i class="fa-solid fa-globe"></i> ভাষা সিলেক্টর</a>
   <a href="NewCart.html" class="nav-item"><i class="fa-solid fa-cart-arrow-down"></i> <span id="cart-count">0</span> কার্টস</a>
-  <a href="#" class="nav-item" id="developer-btn"><i class="fas fa-sitemap"></i> সাইট নির্মাতা</a>
+  <a href="#" class="nav-item" id="location-btn">
+  <i class="fas fa-map-marked"></i> লোকেশন
+</a>
   <a href="#" class="nav-item" id="seller-btn"><i class="fas fa-user"></i> পণ্য বিক্রেতা</a>
 </div>
 
@@ -73,9 +86,9 @@
     <div class="modal-text" id="modal-text"></div>
   </div>
 </div>
-
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+ 
+ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 import { firebaseConfig } from './assets/Firebase-Config/FirebaseConfig.js';
 
@@ -85,6 +98,8 @@ const db = getDatabase(app);
 const productList = document.getElementById('product-list');
 const searchInput = document.getElementById("searchInput");
 const suggestions = document.getElementById("suggestions");
+
+const SECTOR_NUMBER = 4;
 
 let allProducts = [];
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -102,33 +117,12 @@ updateCartCount();
 
 function calcDiscountPercent(originalPrice, discountAmount) {
     if (originalPrice === 0) return 0;
-    const percent = (discountAmount / originalPrice) * 100;
-    const strPercent = percent.toString();
-    const parts = strPercent.split('.');
-    if (!parts[1]) return parseFloat(percent.toFixed(2));
-    if (parts[1].length <= 2) return parseFloat(percent.toFixed(2));
-    return Math.ceil(percent * 100) / 100;
+    return Math.round((discountAmount / originalPrice) * 100);
 }
 
-onValue(ref(db, 'products/sector4'), snapshot => {
+function renderProducts(products) {
     productList.innerHTML = '';
-    allProducts = [];
-    if (!snapshot.exists()) return;
-
-    const productsArray = [];
-    snapshot.forEach(childSnap => {
-        const product = childSnap.val();
-        product.id = childSnap.key;
-        productsArray.push(product);
-    });
-
-    productsArray.sort((a, b) => {
-        if (a.isLast) return 1;
-        if (b.isLast) return -1;
-        return 0;
-    });
-
-    productsArray.forEach((product, index) => {
+    products.forEach((product, index) => {
         product.idNumber = index + 1;
         allProducts.push(product);
 
@@ -149,63 +143,112 @@ onValue(ref(db, 'products/sector4'), snapshot => {
         card.appendChild(cardImage);
         card.appendChild(cardText);
 
-        card.addEventListener('click', () => {
-            const popup = document.createElement('div');
-            popup.className = 'product-popup';
+        let discountPercent = 0;
+        const price = Number(product.price) || 0;
+        const discountAmount = Number(product.discountAmount) || 0;
+        const discountPercentField = Number(product.discountPercent) || 0;
 
-            const originalPrice = Number(product.price) || 0;
-            const discountAmount = Number(product.discountAmount) || 0;
-            const discountPercent = Number(product.discountPercent) || 0;
+        if (discountPercentField > 0) discountPercent = discountPercentField;
+        else if (price > 0 && discountAmount > 0) discountPercent = Math.round((discountAmount / price) * 100);
 
-            let discountedPrice = originalPrice;
-            if (discountAmount > 0) discountedPrice = originalPrice - discountAmount;
-            else if (discountPercent > 0) discountedPrice = originalPrice - Math.round(originalPrice * discountPercent / 100);
+        if (discountPercent > 0) {
+            const badge = document.createElement('div');
+            badge.className = 'discount-badge';
+            badge.textContent = `-${discountPercent}%`;
+            card.appendChild(badge);
+        }
 
-            let priceHTML = '';
-            if (discountedPrice < originalPrice) {
-                priceHTML = `<div class="fake-input"><del>৳${originalPrice}</del> <span class="price-discount">৳${discountedPrice}</span></div>`;
-            } else {
-                priceHTML = `<div class="fake-input">মূল্য: ৳${originalPrice}</div>`;
-            }
-
-            const displayDiscountPercent = discountAmount > 0
-                ? calcDiscountPercent(originalPrice, discountAmount)
-                : discountPercent;
-            const discountHTML = displayDiscountPercent > 0
-                ? `<input type="text" value="ডিসকাউন্ট (%): ${displayDiscountPercent}%" readonly>` 
-                : '';
-
-            popup.innerHTML = `
-                <div class="popup-content">
-                    <span class="close-popup">&times;</span>
-                    <input type="text" value="পণ্যের নাম: ${product.name || ''}" readonly>
-                    <input type="text" value="Product ID: NittoSodai-${String(product.idNumber).padStart(2,'0')}" readonly>
-                    <input type="text" value="ব্র্যান্ডের নাম: ${product.brand || ''}" readonly>
-                    <input type="text" value="ওজন: ${product.weight || ''}" readonly>
-                    ${priceHTML}
-                    ${discountHTML}
-                    <textarea rows="2" readonly>ট্যাগস: ${product.tags ? product.tags.join(', ') : ''}</textarea>
-                    <textarea rows="3" readonly>মূল বিষয়বস্তু: ${product.popupContent || ''}</textarea>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            `;
-            document.body.appendChild(popup);
-
-            popup.querySelector('.close-popup').addEventListener('click', () => popup.remove());
-
-            popup.querySelector('.add-to-cart').addEventListener('click', () => {
-                const itemIndex = cart.findIndex(i => i.id === product.id);
-                if (itemIndex > -1) cart[itemIndex].quantity = (cart[itemIndex].quantity || 1) + 1;
-                else cart.push({ ...product, quantity: 1, finalPrice: discountedPrice });
-                localStorage.setItem('cart', JSON.stringify(cart));
-                updateCartCount();
-                alert("✅ পণ্য কার্টে যোগ করা হয়েছে!");
-                popup.remove();
-            });
-        });
-
+        card.addEventListener('click', () => showProductPopup(product));
         productList.appendChild(card);
     });
+
+    const selected = JSON.parse(localStorage.getItem("selectedProduct"));
+    if (selected && selected.sector === SECTOR_NUMBER && selected.tag) {
+        searchInput.value = selected.tag;
+        filterProductsByTag(selected.tag);
+        localStorage.removeItem("selectedProduct");
+    }
+}
+
+function showProductPopup(product) {
+    const oldPopup = document.querySelector('.product-popup');
+    if (oldPopup) oldPopup.remove();
+
+    const popup = document.createElement('div');
+    popup.className = 'product-popup';
+
+    const originalPrice = Number(product.price) || 0;
+    const discountAmount = Number(product.discountAmount) || 0;
+    const discountPercent = Number(product.discountPercent) || 0;
+
+    let discountedPrice = originalPrice;
+    if (discountAmount > 0) discountedPrice = originalPrice - discountAmount;
+    else if (discountPercent > 0) discountedPrice = originalPrice - Math.round(originalPrice * discountPercent / 100);
+
+    let priceHTML = '';
+    if (discountedPrice < originalPrice) {
+        priceHTML = `<div class="fake-input"><del>৳${originalPrice}</del> <span class="price-discount">৳${discountedPrice}</span></div>`;
+    } else {
+        priceHTML = `<div class="fake-input">মূল্য: ৳${originalPrice}</div>`;
+    }
+
+    const displayDiscountPercent = discountAmount > 0 
+        ? Math.round((discountAmount / originalPrice) * 100) 
+        : discountPercent;
+    const discountHTML = displayDiscountPercent > 0 
+        ? `<input type="text" value="ডিসকাউন্ট (%): ${displayDiscountPercent}%" readonly>` 
+        : '';
+
+    popup.innerHTML = `
+        <div class="popup-content">
+            <span class="close-popup">&times;</span>
+            <img src="${product.media ? product.media : 'https://via.placeholder.com/300x200?text=Image+Not+Found'}" alt="${product.name || 'Product Image'}">
+            <input type="text" value="পণ্যের নাম: ${product.name || ''}" readonly>
+            <input type="text" value="Product ID: NittoSodai-${String(product.idNumber).padStart(2,'0')}" readonly>
+            <input type="text" value="ব্র্যান্ডের নাম: ${product.brand || ''}" readonly>
+            <input type="text" value="ওজন: ${product.weight || ''}" readonly>
+            ${priceHTML}
+            ${discountHTML}
+            <textarea rows="2" readonly>ট্যাগস: ${product.tags ? product.tags.join(', ') : ''}</textarea>
+            <textarea rows="3" readonly>মূল বিষয়বস্তু: ${product.popupContent || ''}</textarea>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    popup.querySelector('.close-popup').addEventListener('click', () => popup.remove());
+
+    popup.querySelector('.add-to-cart').addEventListener('click', () => {
+        const itemIndex = cart.findIndex(i => i.id === product.id);
+        if (itemIndex > -1) cart[itemIndex].quantity = (cart[itemIndex].quantity || 1) + 1;
+        else cart.push({ ...product, quantity: 1, finalPrice: discountedPrice });
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        alert("✅ পণ্য কার্টে যোগ করা হয়েছে!");
+        popup.remove();
+    });
+}
+
+ 
+onValue(ref(db, `products/sector${SECTOR_NUMBER}`), snapshot => {
+    allProducts = [];
+    if (!snapshot.exists()) return;
+
+    const productsArray = [];
+    snapshot.forEach(childSnap => {
+        const product = childSnap.val();
+        product.id = childSnap.key;
+        productsArray.push(product);
+    });
+
+    productsArray.sort((a, b) => {
+        if (a.isLast) return 1;
+        if (b.isLast) return -1;
+        return 0;
+    });
+
+    renderProducts(productsArray);
 });
 
 searchInput.addEventListener('input', () => {
@@ -215,16 +258,18 @@ searchInput.addEventListener('input', () => {
         document.querySelectorAll('.game-card').forEach(c => c.style.display = '');
         return;
     }
+
     let matchedTags = [];
     allProducts.forEach(p => {
         if (p.tags) p.tags.forEach(tag => {
             if (tag.toLowerCase().startsWith(query) && !matchedTags.includes(tag)) matchedTags.push(tag);
         });
     });
+
     matchedTags.forEach(tag => {
         const div = document.createElement('div');
         div.className = 'suggestion-item';
-        div.textContent = tag;
+        div.innerHTML = `<i class="fa fa-box"></i> ${tag}`;
         div.addEventListener('click', () => {
             searchInput.value = tag;
             suggestions.innerHTML = '';
@@ -232,7 +277,9 @@ searchInput.addEventListener('input', () => {
         });
         suggestions.appendChild(div);
     });
-    if (matchedTags.length === 0) document.querySelectorAll('.game-card').forEach(c => c.style.display = 'none');
+
+    if (matchedTags.length === 0) 
+        document.querySelectorAll('.game-card').forEach(c => c.style.display = 'none');
 });
 
 function filterProductsByTag(tag) {
@@ -246,6 +293,13 @@ function filterProductsByTag(tag) {
     });
 }
 </script>
+
+<script>
+  document.getElementById("location-btn").addEventListener("click", () => {
+    window.open("https://maps.app.goo.gl/ccqRvcB8uH9peCRq6", "_blank");
+  });
+</script>
 <script src="assets/Js/script.js"></script>
+<script src="assets/js/preloader.js"></script>
 </body>
 </html>

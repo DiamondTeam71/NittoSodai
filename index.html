@@ -181,7 +181,9 @@ ME: Mere Dill Pe!!!
   <a href="index.html" class="nav-item active"><i class="fa-solid fa-house"></i> হোম</a>
   <a href="#" class="nav-item" id="profile-btn"><i class="fa-solid fa-globe"></i> ভাষা সিলেক্টর</a>
   <a href="NewCart.html" class="nav-item"><i class="fa-solid fa-cart-arrow-down"></i> <span id="cart-count">0</span> কার্টস</a>
-  <a href="#" class="nav-item" id="developer-btn"><i class="fas fa-sitemap"></i> সাইট নির্মাতা</a>
+  <a href="#" class="nav-item" id="location-btn">
+  <i class="fas fa-map-marked"></i> লোকেশন
+</a>
   <a href="#" class="nav-item" id="seller-btn"><i class="fas fa-user"></i> পণ্য বিক্রেতা</a>
 </div>
 
@@ -203,6 +205,11 @@ ME: Mere Dill Pe!!!
 <script src="assets/js/lightbox.js"></script>
 <script type="module" src="assets/js/search.js"></script>
 <script src="assets/js/script.js"></script>
+<script>
+  document.getElementById("location-btn").addEventListener("click", () => {
+    window.open("https://maps.app.goo.gl/ccqRvcB8uH9peCRq6", "_blank");
+  });
+</script>
 
 </body>
 </html>
