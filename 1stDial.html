@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-  
+  <!-- 
 <div id="preloader">
   <div class="preloader-content">
     <img src="assets/images/logo.png" alt="Logo" class="preloader-logo">
@@ -23,7 +23,7 @@
     <div class="typing-text"><span class="text"></span><span class="cursor">|</span></div>
   </div>
 </div>
- 
+ <!--  -->
 <header>
  <img src="assets/images/logo.png" alt="Logo" class="header-logo">
   নিত্য <span class="span-all"> সদাই</span>
@@ -43,11 +43,67 @@
 <div class="contact-menu">
   <div class="contact-btn"><i class="fas fa-comment-dots"></i></div>
   <div class="contact-options">
-    <a href="https://wa.me/8801300226699" class="option" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://wa.me/8801300226699" class="option" title="WhatsApp" target="_blank"><i class="fab fa-whatsapp"></i></a>
     <a href="tel:+01300226699" class="option" title="Call"><i class="fas fa-phone"></i></a>
-    <a href="mailto: nittosodai2025@gmail.com" class="option" title="Email"><i class="fas fa-envelope"></i></a>
+    <a href="mailto:nittosodai2025@gmail.com" class="option" title="Email"><i class="fas fa-envelope"></i></a>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const contactBtnEl = document.querySelector('.contact-btn');
+  const contactMenuEl = document.querySelector('.contact-menu');
+  const popupMenuEl = document.getElementById('profile-popup');
+  const enBtn = document.getElementById('en-btn');
+  const bnBtn = document.getElementById('bn-btn');
+
+  contactBtnEl.addEventListener('click', e => {
+    e.stopPropagation();
+    contactMenuEl.classList.toggle('active');
+  });
+
+  document.addEventListener('click', e => {
+    if (!contactMenuEl.contains(e.target)) contactMenuEl.classList.remove('active');
+  });
+
+  
+
+  function setActiveBtn(activeBtn) {
+    bnBtn.classList.remove('active');
+    enBtn.classList.remove('active');
+    activeBtn.classList.add('active');
+  }
+
+  bnBtn.addEventListener('click', e => {
+    e.preventDefault();
+    setActiveBtn(bnBtn);
+    popupMenuEl.style.display = 'none';
+    window.location.href = '#';
+  });
+
+  enBtn.addEventListener('click', e => {
+    e.preventDefault();
+    setActiveBtn(enBtn);
+    popupMenuEl.style.display = 'none';
+    window.location.href =
+      'https://translate.google.com/translate?sl=auto&tl=en&u=' +
+      encodeURIComponent(window.location.href);
+  });
+  const profileBtn = document.getElementById('profile-btn');
+  profileBtn.addEventListener('click', e => {
+    e.preventDefault();
+    popupMenuEl.style.display =
+      popupMenuEl.style.display === 'block' ? 'none' : 'block';
+  });
+
+  document.addEventListener('click', e => {
+    if (!popupMenuEl.contains(e.target) && !profileBtn.contains(e.target)) {
+      popupMenuEl.style.display = 'none';
+    }
+  });
+});
+</script>
+
 
 <footer>
   <div class="footer-container">
@@ -67,14 +123,14 @@
   <a href="index.html" class="nav-item active"><i class="fa-solid fa-house"></i> হোম</a>
   <a href="#" class="nav-item" id="profile-btn"><i class="fa-solid fa-globe"></i> ভাষা সিলেক্টর</a>
   <a href="NewCart.html" class="nav-item"><i class="fa-solid fa-cart-arrow-down"></i> <span id="cart-count">0</span> কার্টস</a>
-  <a href="#" class="nav-item" id="location-btn">
+  <a href="https://maps.app.goo.gl/ccqRvcB8uH9peCRq6", "_blank" class="nav-item" id="location-btn">
   <i class="fas fa-map-marked"></i> লোকেশন
 </a>
   <a href="#" class="nav-item" id="seller-btn"><i class="fas fa-user"></i> পণ্য বিক্রেতা</a>
 </div>
 
 <div id="profile-popup" class="popup-menu">
-  <button id="bn-btn" class="active"><img src="https://flagcdn.com/bd.svg" class="flag-icon"> বাংলা</button>
+  <button id="bn-btn" class="active" style="margin-bottom: 20px;"><img src="https://flagcdn.com/bd.svg" class="flag-icon"> বাংলা</button>
   <button id="en-btn"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</button>
 </div>
 
@@ -86,6 +142,8 @@
     <div class="modal-text" id="modal-text"></div>
   </div>
 </div>
+<script src="assets/js/script.js"></script>
+<script src="assets/js/preloader.js"></script>
 <script type="module">
  
  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
@@ -293,13 +351,5 @@ function filterProductsByTag(tag) {
     });
 }
 </script>
-
-<script>
-  document.getElementById("location-btn").addEventListener("click", () => {
-    window.open("https://maps.app.goo.gl/ccqRvcB8uH9peCRq6", "_blank");
-  });
-</script>
-<script src="assets/Js/script.js"></script>
-<script src="assets/js/preloader.js"></script>
 </body>
 </html>
