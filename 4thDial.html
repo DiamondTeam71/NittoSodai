@@ -15,7 +15,6 @@
 </style>
 </head>
 <body>
-  
 <div id="preloader">
   <div class="preloader-content">
     <img src="assets/images/logo.png" alt="Logo" class="preloader-logo">
@@ -23,7 +22,6 @@
     <div class="typing-text"><span class="text"></span><span class="cursor">|</span></div>
   </div>
 </div>
- 
 <header>
  <img src="assets/images/logo.png" alt="Logo" class="header-logo">
   নিত্য <span class="span-all"> সদাই</span>
@@ -43,20 +41,81 @@
 <div class="contact-menu">
   <div class="contact-btn"><i class="fas fa-comment-dots"></i></div>
   <div class="contact-options">
-    <a href="https://wa.me/8801300226699" class="option" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://wa.me/8801300226699" class="option" title="WhatsApp" target="_blank"><i class="fab fa-whatsapp"></i></a>
     <a href="tel:+01300226699" class="option" title="Call"><i class="fas fa-phone"></i></a>
-    <a href="mailto: nittosodai2025@gmail.com" class="option" title="Email"><i class="fas fa-envelope"></i></a>
+    <a href="mailto:nittosodai2025@gmail.com" class="option" title="Email"><i class="fas fa-envelope"></i></a>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const contactBtnEl = document.querySelector('.contact-btn');
+  const contactMenuEl = document.querySelector('.contact-menu');
+  const popupMenuEl = document.getElementById('profile-popup');
+  const enBtn = document.getElementById('en-btn');
+  const bnBtn = document.getElementById('bn-btn');
+
+  contactBtnEl.addEventListener('click', e => {
+    e.stopPropagation();
+    contactMenuEl.classList.toggle('active');
+  });
+
+  document.addEventListener('click', e => {
+    if (!contactMenuEl.contains(e.target)) contactMenuEl.classList.remove('active');
+  });
+
+  
+
+  function setActiveBtn(activeBtn) {
+    bnBtn.classList.remove('active');
+    enBtn.classList.remove('active');
+    activeBtn.classList.add('active');
+  }
+
+  bnBtn.addEventListener('click', e => {
+    e.preventDefault();
+    setActiveBtn(bnBtn);
+    popupMenuEl.style.display = 'none';
+    window.location.href = '#';
+  });
+
+  enBtn.addEventListener('click', e => {
+    e.preventDefault();
+    setActiveBtn(enBtn);
+    popupMenuEl.style.display = 'none';
+    window.location.href =
+      'https://translate.google.com/translate?sl=auto&tl=en&u=' +
+      encodeURIComponent(window.location.href);
+  });
+  const profileBtn = document.getElementById('profile-btn');
+  profileBtn.addEventListener('click', e => {
+    e.preventDefault();
+    popupMenuEl.style.display =
+      popupMenuEl.style.display === 'block' ? 'none' : 'block';
+  });
+
+  document.addEventListener('click', e => {
+    if (!popupMenuEl.contains(e.target) && !profileBtn.contains(e.target)) {
+      popupMenuEl.style.display = 'none';
+    }
+  });
+});
+</script>
+
 
 <footer>
   <div class="footer-container">
     <div class="footer-left">
-      <h2><img src="assets/images/logo.png" alt="Logo" class="footer-logo"> নিত্য <span class="span-all">সদাই</span> — উইথ সাবিরিন</h2>
-      <p><i class="fas fa-copyright"></i> এই সাইটের কোনো অংশ বা Ui বা ডিজাইন কপি করা হলে তার বিরুদ্ধে একশন নেওয়া হবে! | Created By <a href="https://XrabonProgrammer.netlify.app/"><span>Xrabon</span></a></p>
+      <h2>
+  <a href="https://t.me/gmailmarketingofficiall" target="_blank">
+    <img src="assets/images/logo.png" alt="Logo" class="footer-logo">
+  </a>
+  নিত্য<span class="span-all"> সদাই</span> — উইথ সাবিরিন
+</h2>
+      <p><i class="fas fa-copyright"></i> এই সাইটের কোনো অংশ বা Ui বা ডিজাইন কপি করা হলে তার বিরুদ্ধে একশন নেওয়া হবে! | Created By </p> <a class="Xrabon" href="https://t.me/XrabonProgrammer" target="_blank">Xrabon!</a>
     </div>
     <div class="footer-right">
-      <a href="https://m.facebook.com/nittosodai.coms/"><i class="fab fa-facebook-f"></i></a>      
+       <a href="https://m.facebook.com/nittosodai.coms/"><i class="fab fa-facebook-f"></i></a>      
       <a href="https://www.instagram.com/nittosodai.coms/"><i class="fab fa-instagram"></i></a>
       <a href="https://youtube.com/@nittosodai-sabirin?si=eaj5s_bIryV8kizA"><i class="fab fa-youtube"></i></a>
     </div>
@@ -67,14 +126,14 @@
   <a href="index.html" class="nav-item active"><i class="fa-solid fa-house"></i> হোম</a>
   <a href="#" class="nav-item" id="profile-btn"><i class="fa-solid fa-globe"></i> ভাষা সিলেক্টর</a>
   <a href="NewCart.html" class="nav-item"><i class="fa-solid fa-cart-arrow-down"></i> <span id="cart-count">0</span> কার্টস</a>
-  <a href="#" class="nav-item" id="location-btn">
+  <a href="https://maps.app.goo.gl/ccqRvcB8uH9peCRq6", "_blank" class="nav-item" id="location-btn">
   <i class="fas fa-map-marked"></i> লোকেশন
 </a>
   <a href="#" class="nav-item" id="seller-btn"><i class="fas fa-user"></i> পণ্য বিক্রেতা</a>
 </div>
 
 <div id="profile-popup" class="popup-menu">
-  <button id="bn-btn" class="active"><img src="https://flagcdn.com/bd.svg" class="flag-icon"> বাংলা</button>
+  <button id="bn-btn" class="active" style="margin-bottom: 20px;"><img src="https://flagcdn.com/bd.svg" class="flag-icon"> বাংলা</button>
   <button id="en-btn"><img src="https://flagcdn.com/us.svg" class="flag-icon"> English</button>
 </div>
 
@@ -86,6 +145,8 @@
     <div class="modal-text" id="modal-text"></div>
   </div>
 </div>
+<script src="assets/js/script.js"></script>
+<script src="assets/js/preloader.js"></script>
 <script type="module">
  
  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
@@ -170,6 +231,60 @@ function renderProducts(products) {
     }
 }
 
+function openReviewModal(productId){
+  const old = document.querySelector('.review-modal');
+  if(old) old.remove();
+
+  const reviews = JSON.parse(localStorage.getItem('reviews_'+productId)) || [];
+
+  const modal = document.createElement('div');
+  modal.className = 'review-modal';
+
+  modal.innerHTML = `
+    <div class="review-content">
+      <span style="" id="closeReview">&times;</span>
+      <h3 style="font-size: 17px;
+    margin-bottom: 20px;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    background: red;
+    padding: 10px;
+    margin-right: 30px;
+    margin-left: 30px;
+    border-radius: 48px;
+    border: ppx solid black;
+    margin: 10px 20px;">ব্যাবহারকারী দের মতামত!</h3>
+
+      <div id="reviewList" style="margin-top: 20px;">
+        ${reviews.map(r => `
+          <div class="review-item">
+            <i class="fa-solid fa-user"></i>
+            <div class="review-text">${r}</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <textarea rows="3" placeholder="আপনার মূল্যবান মতামত লিখুন..."></textarea>
+      <button id="submitReview">আপনার মূল্যবান মতামত সাবমিট করুন!</button>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  modal.querySelector('#closeReview').onclick = ()=>modal.remove();
+
+  modal.querySelector('#submitReview').onclick = ()=>{
+    const text = modal.querySelector('textarea').value.trim();
+    if(!text) return alert("রিভিউ লিখুন");
+
+    reviews.push(text);
+    localStorage.setItem('reviews_'+productId, JSON.stringify(reviews));
+    modal.remove();
+    openReviewModal(productId);
+  };
+}
+
 function showProductPopup(product) {
     const oldPopup = document.querySelector('.product-popup');
     if (oldPopup) oldPopup.remove();
@@ -187,10 +302,12 @@ function showProductPopup(product) {
 
     let priceHTML = '';
     if (discountedPrice < originalPrice) {
-        priceHTML = `<div class="fake-input"><del>৳${originalPrice}</del> <span class="price-discount">৳${discountedPrice}</span></div>`;
-    } else {
-        priceHTML = `<div class="fake-input">মূল্য: ৳${originalPrice}</div>`;
-    }
+    priceHTML = `
+    <div class="fake-input">
+        <del style="text-decoration: line-through; color: red;">৳${originalPrice}</del>
+        <span class="price-discount" style="font-weight:bold; color:green;">৳${discountedPrice}</span>
+    </div>`;
+}
 
     const displayDiscountPercent = discountAmount > 0 
         ? Math.round((discountAmount / originalPrice) * 100) 
@@ -211,8 +328,8 @@ function showProductPopup(product) {
             ${discountHTML}
             <textarea rows="2" readonly>ট্যাগস: ${product.tags ? product.tags.join(', ') : ''}</textarea>
             <textarea rows="3" readonly>মূল বিষয়বস্তু: ${product.popupContent || ''}</textarea>
-            <button class="add-to-cart">Add to Cart</button>
-        </div>
+            <button class="add-to-cart">কার্টে যোগ করুন</button>
+<button class="review-btn">মতামত</button>
     `;
 
     document.body.appendChild(popup);
@@ -228,6 +345,10 @@ function showProductPopup(product) {
         alert("✅ পণ্য কার্টে যোগ করা হয়েছে!");
         popup.remove();
     });
+    popup.querySelector('.review-btn').addEventListener('click', (e) => {
+    e.stopPropagation(); // কার্ড ক্লিক যেন না লাগে
+    openReviewModal(product.id);
+});
 }
 
  
@@ -292,14 +413,8 @@ function filterProductsByTag(tag) {
         } else card.style.display = 'none';
     });
 }
-</script>
 
-<script>
-  document.getElementById("location-btn").addEventListener("click", () => {
-    window.open("https://maps.app.goo.gl/ccqRvcB8uH9peCRq6", "_blank");
-  });
+
 </script>
-<script src="assets/Js/script.js"></script>
-<script src="assets/js/preloader.js"></script>
 </body>
 </html>

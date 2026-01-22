@@ -32,11 +32,11 @@
     <p id="empty-msg">আপনার কার্টে কোনো পণ্য নেই।</p>
   </div>
   <div class="cart-total" id="cart-total">মোট: 0৳</div>
+<div class="button-grid">
+  <button id="checkout"><i class="fas fa-credit-card"></i> Confirm</button>
+  <button id="view-orders"><i class="fas fa-eye"></i> Orders</button>
 
-  <button id="checkout"><i class="fas fa-credit-card"></i> অর্ডার কনফার্ম করুন</button>
-  <button id="view-orders"><i class="fas fa-eye"></i> অর্ডার দেখুন</button>
-  <button id="download-orders"><i class="fas fa-download"></i> অর্ডার ডাউনলোড করুন</button>
-
+</div>
   <div id="orders-list"></div>
 </div>
 
@@ -51,7 +51,7 @@
       <textarea id="passion" placeholder="আপনার পেশা" required></textarea>
       <input type="tel" id="mobile" placeholder="মোবাইল নাম্বার" required>
       
-      <button type="submit"><i class="fas fa-paper-plane"></i> অর্ডার সাবমিট করুন</button>
+      <button type="submit"><i class="fas fa-paper-plane"></i>  সাবমিট</button>
     </form>
   </div>
 </div>
@@ -68,12 +68,16 @@
 <footer>
   <div class="footer-container">
     <div class="footer-left">
-      <h2><img src="assets/images/logo.png" alt="Logo" class="footer-logo"> নিত্য <span class="span-all">সদাই</span> — উইথ সাবিরিন</h2>
-      <p><i class="fas fa-copyright"></i> এই সাইটের কোনো অংশ বা Ui বা ডিজাইন কপি করা হলে তার বিরুদ্ধে একশন নেওয়া হবে! | Created By 
-        <a href="https://XrabonProgrammer.netlify.app/"><span>Xrabon</span></a></p>
+      <h2>
+  <a href="https://t.me/gmailmarketingofficiall" target="_blank">
+    <img src="assets/images/logo.png" alt="Logo" class="footer-logo">
+  </a>
+  নিত্য<span class="span-all"> সদাই</span> — উইথ সাবিরিন
+</h2>
+      <p><i class="fas fa-copyright"></i> এই সাইটের কোনো অংশ বা Ui বা ডিজাইন কপি করা হলে তার বিরুদ্ধে একশন নেওয়া হবে! | Created By </p> <a class="Xrabon" href="https://t.me/XrabonProgrammer" target="_blank">Xrabon!</a>
     </div>
     <div class="footer-right">
-      <a href="https://m.facebook.com/nittosodai.coms/"><i class="fab fa-facebook-f"></i></a>          
+       <a href="https://m.facebook.com/nittosodai.coms/"><i class="fab fa-facebook-f"></i></a>      
       <a href="https://www.instagram.com/nittosodai.coms/"><i class="fab fa-instagram"></i></a>
       <a href="https://youtube.com/@nittosodai-sabirin?si=eaj5s_bIryV8kizA"><i class="fab fa-youtube"></i></a>
     </div>
@@ -83,8 +87,10 @@
 <div class="navbar">
   <a class='nav-item active' href='/'><i class="fa-solid fa-house"></i> হোম</a>
   <a href="#" class="nav-item" id="profile-btn"><i class="fa-solid fa-globe"></i> ভাষা সিলেক্টর</a>
-  <a class='nav-item' href='#'><i class="fa-solid fa-cart-arrow-down"></i> <span id="cart-count"></span> কার্টস</a>
-  <a href="#" class="nav-item" id="developer-btn"><i class="fas fa-sitemap"></i> সাইট নির্মাতা</a>
+   <a href="https://maps.app.goo.gl/ccqRvcB8uH9peCRq6" class="nav-item" id="location-btn">
+  <i class="fas fa-map-marked"></i> লোকেশন
+</a>
+ 
   <a href="#" class="nav-item" id="seller-btn"><i class="fas fa-user"></i> পণ্য বিক্রেতা</a>
 </div>
 
@@ -170,9 +176,9 @@ function renderCart() {
         const mediaHTML = isImage
             ? `<img src="${mediaSrc}">`
             : `<video src="${mediaSrc}" controls width="80"></video>`;
-        const priceHTML = (finalPrice < price)
-            ? `<del>৳${price}</del> <span style="font-weight:bold;">৳${finalPrice}</span>`
-            : `৳${price}`;
+const priceHTML = (finalPrice < price)
+    ? `<del style="text-decoration: line-through; color: red;">৳${price}</del> <span style="font-weight:bold;">৳${finalPrice}</span>`
+    : `৳${price}`;
 
         card.innerHTML = `
         ${mediaHTML}
@@ -185,7 +191,7 @@ function renderCart() {
                 <span class="qty">${qty}</span>
                 <button class="plus">+</button>
             </div>
-            <button class="remove-btn">মুছুন</button>
+            <button class="remove-btn">অর্ডার টি মুছুন</button>
         </div>`;
 
         card.querySelector('.plus').addEventListener('click', () => {
@@ -223,7 +229,7 @@ function updateTotal() {
         total += finalPrice * qty;
     });
 
-    const delivery = total >= 1000 ? 0 : 50;
+    const delivery = total >= 1000 ? 0 : 30;
     cartTotal.textContent = total >= 1000
         ? `মোট: ${total}৳ (ডেলিভারি ফ্রি)`
         : `মোট: ${total + delivery}৳ (ডেলিভারি: ${delivery}৳)`;
@@ -262,7 +268,7 @@ checkoutForm.addEventListener('submit', e => {
         total += finalPrice * qty;
     });
 
-    const delivery = total >= 1000 ? 0 : 50;
+    const delivery = total >= 1000 ? 0 : 30;
     const name = document.getElementById('name').value;
     const address = document.getElementById('address').value;
     const passion = document.getElementById('passion').value;
@@ -278,8 +284,8 @@ checkoutForm.addEventListener('submit', e => {
             address,
             passion,
             mobile,
-            accountType: "Wait For Payment",
-            accountNumber: "Wait For Payment",
+            accountType: "যাচাই এর অপেক্ষায়!",
+            accountNumber: "যাচাই এর অপেক্ষায়!",
             timestamp: new Date().toISOString(),
             approved: "pending",
             userId
@@ -327,8 +333,8 @@ viewOrdersBtn.addEventListener('click', () => {
                 else if (item.discountAmount > 0)
                     finalPrice -= item.discountAmount;
                 const priceHTML = (finalPrice < price)
-                    ? `<del>৳${price}</del> <span style="font-weight:bold;color:green;">৳${finalPrice}</span>`
-                    : `৳${finalPrice}`;
+    ? `<del style="text-decoration: line-through; color: red;">৳${price}</del> <span style="font-weight:bold;">৳${finalPrice}</span>`
+    : `৳${price}`;
                 const imgHTML = `<img src="${item.media || placeholderImg}" style="width:80px;height:80px;object-fit:cover;border-radius:10px;margin-right:10px;border:2px solid #000;">`;
                 itemsHTML += `<div class="order-item" style="display:flex;align-items:center;margin:8px 0;padding:5px;border-bottom:1px solid #ccc;">
                   ${imgHTML}<div><div style="font-weight:bold;font-size:16px;">${item.name}</div>
@@ -336,15 +342,19 @@ viewOrdersBtn.addEventListener('click', () => {
             });
 
             const paymentButton = (!order.approved || order.approved === "pending") && Object.keys(adminPayments).length > 0
-                ? `<button class="pay-now-btn" style="padding:10px 15px;border:none;border-radius:8px;background:#28a745;color:#fff;cursor:pointer;" data-key="${order.key}"><i class="fas fa-money-bill-wave"></i> পেমেন্ট করুন</button>`
+                ? `<div style="text-align: center;">
+  <button class="pay-now-btn" style="padding:10px 15px;border:none;border-radius:8px;background:#28a745;color:#fff;cursor:pointer;margin-top: 15px;" data-key="${order.key}">
+    <i class="fas fa-money-bill-wave"></i> দ্বিস্তরী কনফার্ম করুন
+  </button>
+</div>`
                 : '';
 
             let statusText = order.approved === "approved" ? '✅ কনফার্ম হয়েছে'
                             : order.approved === "disapproved" ? '❌ বাতিল হয়েছে'
-                            : '⏳ পেমেন্ট অপেক্ষায়';
+                            : '⏳ যাচাই এর কাজ চলছে!';
 
             ordersList.innerHTML += `
-            <div class="order-card" style="padding:10px;background:#fff;margin-bottom:12px;border-radius:25px;border:4px solid black;">
+            <div class="order-card" style="padding:30px;background:#fff;margin-bottom:12px;border-radius:55px;border:0px solid black;">
               <div class="order-card-header" style="display:flex;justify-content:space-between;margin-bottom:8px;">
                 <h4>অর্ডার নং: ${order.orderId}</h4>
                 <h4>মোট: ৳${order.total + order.delivery}</h4>
@@ -358,7 +368,7 @@ viewOrdersBtn.addEventListener('click', () => {
                 <div>একাউন্ট টাইপ: ${order.accountType}</div>
                 <div>একাউন্ট নাম্বার: ${order.accountNumber}</div>
                 <div>অর্ডার সময়: ${orderDate}</div>
-                <div class="order-status" style="font-weight:600;">স্ট্যাটাস: ${statusText}</div>
+                <div class="order-status" style="font-weight:bold;">স্ট্যাটাস: ${statusText}</div>
                 ${paymentButton}
               </div>`;
         });
@@ -374,15 +384,30 @@ viewOrdersBtn.addEventListener('click', () => {
                 const popup = document.createElement('div');
                 popup.style = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:center;z-index:9999;';
                 popup.innerHTML = `
-                <div style="background:#fff;padding:20px;border-radius:15px;width:90%;max-width:400px;position:relative;border: 4px solid black;">
-                  <span id="close-popup" style="position:absolute;top:10px;right:15px;font-size:22px;cursor:pointer;">&times;</span>
-                  <h3><i class="fas fa-money-bill-wave"></i> পেমেন্ট করুন</h3>
+                <div style="background:#fff;padding:30px;border-radius:55px;width:90%;max-width:400px;position:relative;border: 0px solid black;">
+                  <span id="close-popup" style="position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: red;">&times;</span>
+                  <h3 style=" font-size: 20px;
+    margin-bottom: 20px;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    background: red;
+    padding: 10px;
+    border-radius: 48px;
+    border: ppx solid black;
+    margin: 10px 20px;"><i class="fas fa-money-bill-wave"></i> দ্বিস্তরী কনফার্ম করুন</h3>
                   <select id="payment-method-select" style="width:100%;padding:10px;margin:15px 0;border-radius:8px;border:1px solid #ccc;">
-                    <option value="">-- মাধ্যম নির্বাচন করুন (নাম্বার দেওয়া আছে) --</option>
+                    <option value="">মাধ্যম নির্বাচন করুন (ক্যাশ অন ডেলিভারি ও বিভিন্ন পেমেন্ট মাধ্যম দেওয়া আছে)</option>
                     ${paymentOptions}
                   </select>
-                  <input type="text" id="user-account-number" placeholder="আপনার নাম্বার লিখুন" style="width:100%;padding:10px;margin-bottom:15px;border-radius:8px;border:1px solid #ccc;">
-                  <button id="confirm-payment-btn" style="width:100%;padding:10px;background:#28a745;color:#fff;border:none;border-radius:8px;font-size:16px;"><i class="fas fa-check-circle"></i> পেমেন্ট নিশ্চিত করুন</button>
+                  <input type="text" id="user-account-number" placeholder="পে করলে আপনার নাম্বার লিখুন | COD = COD" style="width:100%;padding:10px;margin-bottom:15px;border-radius:38px;border:0px solid #ccc; background: wheat;">
+                  <button id="confirm-payment-btn" style="width:100%;padding:10px;background:#28a745;color:#fff;border:none;border-radius:8px;font-size:16px;"><i class="fas fa-check-circle"></i> নিশ্চিত?</button>
                 </div>`;
                 document.body.appendChild(popup);
 
@@ -399,7 +424,7 @@ viewOrdersBtn.addEventListener('click', () => {
                         accountNumber: number,
                         approved: "pending"
                     }).then(() => {
-                        alert('✅ পেমেন্ট তথ্য পাঠানো হয়েছে! এডমিন নিশ্চিত করলে কনফার্ম হবে।');
+                        alert('✅ পেমেন্ট তথ্য পাঠানো হয়েছে! শিঘ্রই নিশ্চিত করার পর কনফার্ম হবে।');
                         popup.remove();
                     }).catch(() => alert('❌ কিছু সমস্যা হয়েছে, আবার চেষ্টা করুন।'));
                 });
