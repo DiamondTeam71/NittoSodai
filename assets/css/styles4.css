@@ -28,8 +28,8 @@ header {
   padding: 20px;
   font-size: 26px;
   color: white;
-  border-top: 4px solid black;
-  border-bottom: 4px solid black;
+  border-top: 3px solid black;
+  border-bottom: 3px solid black;
   display: flex;
   align-items: center;   
   justify-content: center; 
@@ -40,7 +40,7 @@ header {
   width: 60px;
   height: 60px;
   border-radius: 12px;
-  border: 3px solid black;
+  border: 2px solid black;
   object-fit: cover; 
 }
 
@@ -54,8 +54,8 @@ header {
   background: white;
   padding: 25px;
   margin: 20px;
-  border-radius: 26px;
-  border: 4px solid black;
+  border-radius: 50px;
+  border: 0px solid black;
   text-align: center;
 }
 
@@ -64,8 +64,8 @@ header {
   padding: 25px;
   color: white;
   margin: 20px;
-  border-radius: 26px;
-  border: 4px solid red;
+  border-radius: 38px;
+  border: 0px solid red;
   text-align: center;
 }
 
@@ -78,8 +78,8 @@ header {
   background: red;
   color: white;
   padding: 15px;
-  border: 4px solid black;
-  border-radius: 18px;
+  border: 0px solid black;
+  border-radius: 48px;
   margin-bottom: 20px;
 }
 
@@ -117,9 +117,9 @@ header {
 .game-section {
   margin: 20px;
   background: yellow;
-  padding: 15px;
-  border-radius: 39px;
-  border: 4px solid black;
+  padding: 25px;
+  border-radius: 50px;
+  border: 0px solid black;
 }
 
 .game-section h3 {
@@ -128,9 +128,11 @@ header {
   color: #fff;
   text-align: center;
   font-weight: bold;
+  
   background: red;
-  border-radius: 15px;
-  border: 4px solid black;
+  padding: 10px;
+  border-radius: 38px;
+  border: 0px solid black;
   margin-left: 20px;
   margin-right: 20px;
   margin-top: 10px;
@@ -182,7 +184,8 @@ footer {
   padding: 40px 20px;
   color: white;
   font-weight: bold;
-  border-top: 5px solid black;
+  border-top: 3px solid black;
+  
   position: relative;
   z-index: 100;  
 }
@@ -204,7 +207,7 @@ footer {
   width: 60px;
   height: 60px;
   border-radius: 12px;
-  border: 3px solid black;
+  border: 2px solid black;
   object-fit: cover; 
   vertical-align: middle;
 }
@@ -223,9 +226,10 @@ footer {
   color: #f5f5f5;
 }
 
-.footer-left p a {
+.Xrabon {
   color: gold;
-  text-decoration: underline;
+  text-decoration: ;
+  font-size: 24px;  
 } 
 
 .footer-left p i {
@@ -257,7 +261,7 @@ footer {
   padding: 10px;
   color: black;
   border-radius: 12px;
-  border: 3px solid black;
+  border: 2px solid black;
 }
 
 @media(max-width:768px) {
@@ -272,9 +276,10 @@ footer {
   }
 }
 
+
 marquee {
   background: yellow;
-  border-bottom: 4px solid black;
+  border-bottom: 3px solid black;
   padding: 15px;
   font-weight: bold;
 }
@@ -344,18 +349,20 @@ marquee {
 
 .navbar {
   width: 100%;
-  background: #2c3e50;
+  background: rgba(139, 69, 19, 0.85); 
+  backdrop-filter: blur(4px); 
+  -webkit-backdrop-filter: blur(4px);
   display: flex;
-  border-top: 4px solid black;
   justify-content: space-around;
   align-items: center;
   padding: 10px 0;
-  box-shadow: 0 -3px 8px rgba(0,0,0,0.2);
-
+  border-top: 3px solid black;
+  box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.2);
+  
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: 999; 
+  z-index: 999;
 }
 
 .nav-item {
@@ -375,6 +382,7 @@ marquee {
 .nav-item:hover {
   color: #f39c12;
 }
+
 
 .contact-menu {
   position: fixed;
@@ -458,7 +466,7 @@ marquee {
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-  border: 4px solid black;
+  border: 0px solid black;
   padding: 20px 30px;
   display: none;
   flex-direction: column;
@@ -580,8 +588,8 @@ marquee {
 .gMP {
  background: wheat;
  padding: 15px;
- border: 4px solid black;
- border-radius: 39px;
+ border: 0px solid black;
+ border-radius: 45px;
  font-size: 16px;
  text-align: center;
 }

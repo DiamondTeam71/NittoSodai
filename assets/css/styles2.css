@@ -4,6 +4,7 @@
     box-sizing: border-box;
     font-family: 'Hind Siliguri', 'Poppins', sans-serif;
     font-weight: bold;
+    text-decoration: none;
 }
 
 body {
@@ -20,8 +21,8 @@ header {
   padding: 20px;
   font-size: 26px;
   color: white;
-  border-top: 4px solid black;
-  border-bottom: 4px solid black;
+  border-top: 3px solid black;
+  border-bottom: 3px solid black;
   display: flex;
   align-items: center;   
   justify-content: center; 
@@ -32,7 +33,7 @@ header {
   width: 60px;
   height: 60px;
   border-radius: 12px;
-  border: 3px solid black;
+  border: 2px solid black;
   object-fit: cover; 
 }
 
@@ -42,7 +43,7 @@ header {
 }
 marquee {
     background: yellow;
-    border-bottom: 4px solid black;
+    border-bottom: 3px solid black;
     padding: 15px;
     font-weight: bold;
 }
@@ -51,8 +52,8 @@ marquee {
     margin: 20px;
     background: yellow;
     padding: 15px;
-    border-radius: 26px;
-    border: 4px solid black;
+    border-radius: 50px;
+    border: 0px solid black;
 }
 
 .game-section h3 {
@@ -62,10 +63,13 @@ marquee {
     text-align: center;
     font-weight: bold;
     background: red;
-    border-radius: 15px;
-    border: 4px solid black;
+    padding: 10px;
+    border-radius: 48px;
+    border: ppx solid black;
     margin: 10px 20px;
 }
+
+
 
 .game-types {
     display: flex;
@@ -76,9 +80,9 @@ marquee {
 
 .game-card {
     background: white;
-    border: 4px solid black;
-    border-radius: 23px;
-    width: 130px;
+    border: 0px solid black;
+    border-radius: 50px;
+    width: 130px;    
     text-align: center;
     cursor: pointer;
     transition: transform 0.2s;
@@ -95,6 +99,8 @@ marquee {
     background-position: center;
 }
 
+
+
 .card-text {
     height: 45px;
     display: flex;
@@ -103,10 +109,122 @@ marquee {
     font-weight: bold;
     font-size: 14px;
     text-decoration: none;
+    padding: 10px;
     color: black;
     border-top: 3px solid black;
     background: #f5f5f5;
 }
+
+.review-btn{
+  margin-top:10px;
+  background:#ff9800;
+  color:#fff;
+  border:none;
+  padding:10px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.review-modal{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 10px;
+}
+
+.review-content{
+  background: #fff;
+  padding: 25px;
+  border-radius: 40px;
+  max-width: 420px;
+  width: 100%;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0,0,0,.35);
+  animation: popupScale .35s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Animation FIX */
+@keyframes popupScale{
+  from{
+    transform: scale(.8);
+    opacity: 0;
+  }
+  to{
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Close button */
+#closeReview{
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 30px;
+  cursor: pointer;
+  color: #777;
+}
+#closeReview:hover{
+  color: red;
+}
+
+.review-item{
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  background: #f5f5f5;
+  padding: 12px;
+  border-radius: 18px;
+  align-items: flex-start;
+}
+
+.review-item i{
+  font-size: 26px;
+  color: #888;
+}
+
+.review-text{
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.review-content textarea{
+  width: 100%;
+  padding: 12px 15px;
+  margin: 10px 0;
+  background: #fff7e6;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  resize: none;
+  outline: none;
+}
+
+/* Submit button */
+#submitReview{
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  background: #28a745;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: .25s;
+}
+#submitReview:hover{
+  background: #218838;
+}
+
 
 .product-popup {
     position: fixed;
@@ -126,9 +244,9 @@ marquee {
 .popup-content {
     background: #fff;
     padding: 25px;
-    border-radius: 27px;
+    border-radius: 47px;
     margin: 20px;
-    border: 4px solid black;
+    border: 0px solid black;
     max-width: 400px;
     position: relative;
     text-align: center;
@@ -138,7 +256,7 @@ marquee {
     max-height: 90vh;
 }
 
-.close-popup {
+.close-popup, #closeReview {
     position: absolute;
     top: 7px;
     right: 15px;
@@ -153,8 +271,9 @@ marquee {
     width: 100%;
     padding: 10px;
     margin: 6px 0;
-    border: 4px solid black;
-    border-radius: 8px;
+    background: wheat;
+    border: 0px solid black;
+    border-radius: 35px;
     font-size: 14px;
 }
 
@@ -174,7 +293,8 @@ footer {
   padding: 40px 20px;
   color: white;
   font-weight: bold;
-  border-top: 5px solid black;
+  border-top: 3px solid black;
+  
   position: relative;
   z-index: 100;  
 }
@@ -196,7 +316,7 @@ footer {
   width: 60px;
   height: 60px;
   border-radius: 12px;
-  border: 3px solid black;
+  border: 2px solid black;
   object-fit: cover; 
   vertical-align: middle;
 }
@@ -215,9 +335,10 @@ footer {
   color: #f5f5f5;
 }
 
-.footer-left p a {
+.Xrabon {
   color: gold;
-  text-decoration: underline;
+  text-decoration: ;
+  font-size: 24px;  
 } 
 
 .footer-left p i {
@@ -249,7 +370,7 @@ footer {
   padding: 10px;
   color: black;
   border-radius: 12px;
-  border: 3px solid black;
+  border: 2px solid black;
 }
 
 @media(max-width:768px) {
@@ -263,21 +384,22 @@ footer {
     margin-right: 10px;
   }
 }
-
 .navbar {
   width: 100%;
-  background: #2c3e50;
+  background: rgba(139, 69, 19, 0.85); 
+  backdrop-filter: blur(4px); 
+  -webkit-backdrop-filter: blur(4px);
   display: flex;
-  border-top: 4px solid black;
   justify-content: space-around;
   align-items: center;
   padding: 10px 0;
-  box-shadow: 0 -3px 8px rgba(0,0,0,0.2);
-
+  border-top: 3px solid black;
+  box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.2);
+  
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: 999; 
+  z-index: 999;
 }
 
 .nav-item {
@@ -297,6 +419,7 @@ footer {
 .nav-item:hover {
   color: #f39c12;
 }
+
 
 /* এই কোডের কোনো অংশ হুবহু বা দেখতে প্রায় এমন তৈরি করলে তা নকল হিসেবে গণ্য হবে। একমাত্র Xrabon Programmer ছাড়া কেউই এইরম নকশা বা ডিজাইন তৈরি করতে পারবে না! */
 
@@ -323,18 +446,18 @@ footer {
     position: relative;
 }
 
-.add-to-cart {
+.add-to-cart, .review-btn{
   margin-top: 10px;
   padding: 12px;
   background: red;
   color: white;
-  border: 4px solid black;
+  border: 0px solid black;
   font-weight: bold;
-  border-radius: 12px;
+  border-radius: 38px;
   cursor: pointer;
   transition: 0.3s;
 }
-.add-to-cart:hover {
+.add-to-cart:hover, .review-btn:hover {
   background: aqua;
   color: black;
 }
@@ -349,7 +472,7 @@ footer {
     width: 100%;
     padding: 12px 20px;
     border-radius: 50px;
-    border: 4px solid black;
+    border: 3px solid black;
     outline: none;
     font-size: 15px;
     background: rgba(255,255,255,0.15);
@@ -423,10 +546,10 @@ footer {
     width: 100%;
     padding: 10px;
     margin: 6px 0;
-    border: 4px solid black;
-    border-radius: 8px;
+    border: 0px solid black;
+    border-radius: 48px;
     font-size: 14px;
-    background: white;
+    background: wheat;
     font-weight: bold;
     text-align: left;
 }
@@ -444,8 +567,8 @@ footer {
     padding: 12px 18px;
     background: red;
     color: white;
-    border: 4px solid black;
-    border-radius: 12px;
+    border: 0px solid black;
+    border-radius: 30px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
@@ -541,7 +664,7 @@ footer {
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-  border: 4px solid black;
+  border: 0px solid black;
   padding: 20px 30px;
   display: none;
   flex-direction: column;
@@ -681,7 +804,7 @@ footer {
   width: 120px;
   margin-bottom: 20px;
   border-radius: 27px;
-  border: 6px solid black;
+  border: 3px solid black;
   animation: logoBounce 2s ease infinite;
 }
 
@@ -712,7 +835,7 @@ footer {
   white-space: nowrap;
   display: inline-block;
   min-height: 40px;
-  border: 4px solid black;
+  border: 3px solid black;
   border-radius: 28px;
   padding: 15px;
   margin-top: 20px;
@@ -735,7 +858,7 @@ footer {
 
 .game-card {
     position: relative; 
-    border-radius: 16px;
+    border-radius: 30px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     cursor: pointer;
@@ -750,7 +873,7 @@ footer {
     font-weight: 700;
     font-size: 12px;
     border-radius: 12px;
-    border: 4px solid black;
+    border: 0px solid black;
     padding: 6px 8px;
     z-index: 10;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
@@ -770,8 +893,8 @@ footer {
     width: 100%;           
     max-height: 200px;     
     object-fit: contain;   
-    border-radius: 28px;   
-    border: 4px solid black;
+    border-radius: 58px;   
+    border: 0px solid black;
     margin-top: 10px;
     margin-bottom: 15px;  
     box-shadow: 0 4px 12px rgba(0,0,0,0.2); 

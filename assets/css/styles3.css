@@ -4,6 +4,7 @@
     box-sizing: border-box;
     font-family: 'Hind Siliguri', 'Poppins', sans-serif;
     font-weight: bold;
+    text-decoration: none;
 }
 
 body {
@@ -21,8 +22,8 @@ header {
   padding: 20px;
   font-size: 26px;
   color: white;
-  border-top: 4px solid black;
-  border-bottom: 4px solid black;
+  border-top: 3px solid black;
+  border-bottom: 3px solid black;
   display: flex;
   align-items: center;   
   justify-content: center; 
@@ -33,7 +34,7 @@ header {
   width: 60px;
   height: 60px;
   border-radius: 12px;
-  border: 3px solid black;
+  border: 2px solid black;
   object-fit: cover; 
 }
 .span-all {
@@ -42,27 +43,45 @@ header {
 }
 .marquee {
     background: yellow;
-    border-bottom: 4px solid black;
+    border-bottom: 3px solid black;
     padding: 15px;
     font-weight: bold;
 }
 
 .cart-section {
-    max-width: 1200px;
+    max-width: 340px;
     margin: 20px auto;
     padding: 20px;
     background: yellow;
-    border: 4px solid black;
-    border-radius: 25px;    
+    border: 0px solid black;
+    border-radius: 50px;    
+    padding: 20px;
 }
 
 .cart-section h2 {
-    text-align: center;
     font-size: 28px;
-    color: red;
     margin-bottom: 20px;
-    border-bottom: 4px solid black;
-    padding-bottom: 10px;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    background: red;
+    padding: 10px;
+    border-radius: 48px;
+    border: 0px solid black;
+    margin: 10px 20px;
+}
+
+.modal-content h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    background: red;
+    padding: 10px;
+    border-radius: 48px;
+    border: ppx solid black;
+    margin: 10px 20px;
 }
 
 .cart-items {
@@ -75,10 +94,12 @@ header {
 .cart-card {
     width: 280px;
     background-color: #fff;
-    border-radius: 16px;
-    border: 4px solid black;
-    padding: 12px;
+    border-radius: 48px;
+    border: 0px solid black;
+    padding: 20px;
     box-sizing: border-box;
+    margin-right: 20px;
+    margin-left: 20px;
     position: relative;
     transition: transform 0.25s ease;
 }
@@ -88,9 +109,9 @@ header {
     width: 100%;
     height: 150px;
     object-fit: cover;
-    border-radius: 10px;
+    
     margin-bottom: 10px;
-    border: 1px solid #ccc;
+    border: 0px solid #ccc;
     transition: transform 0.2s ease;
 }
 .cart-card img:hover,
@@ -111,37 +132,62 @@ header {
 .quantity-controls button:hover { background-color: #f0f0f0; transform: scale(1.05); }
 
 .remove-btn {
-    width: 100%;
-    padding: 8px 0;
-    border-radius: 10px;
-    border: 1px solid #c0392b;
-    background-color: #e74c3c;
+    padding: 12px 10px;
+    border-radius: 30px;
+    border: 0px solid #c0392b;
+    background-color: red;
     color: #fff;
     font-weight: 700;
     cursor: pointer;
     transition: transform 0.2s ease, background-color 0.2s ease;
+    display: block;
+    margin: 20px auto; 
 }
 .remove-btn:hover { background-color: #c0392b; transform: scale(1.03); }
 
-.cart-total { text-align: center; margin-top: 20px; font-size: 20px; font-weight: 700; }
+.cart-total { background: wheat;
+ padding: 15px;
+ border: 0px solid black;
+ border-radius: 45px;
+ font-size: 16px;
+ text-align: center; margin-top: 20px; margin-right: 30px; margin-left: 30px;}
 #checkout, #view-orders, #download-orders {
     display: block;
     margin: 20px auto;
     padding: 12px 25px;
     font-size: 18px;
     font-weight: 700;
-    border-radius: 18px;
+    border-radius: 38px;
     cursor: pointer;
-    border: 4px solid black;
+    border: 0px solid black;
     transition: 0.3s;
 }
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    gap: 10px;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.button-grid button {
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s ease;
+    font-size: 13px;
+}
+
 #checkout { background: red; color: white; }
 #checkout:hover { background: aqua; color: black; }
+
 #view-orders { background: #28a745; color: white; }
 #view-orders:hover { background: #218838; }
+
 #download-orders { background: #007bff; color: white; }
 #download-orders:hover { background: #0056b3; }
-
 .modal-overlay {
     position: fixed;
     top:0;
@@ -157,14 +203,15 @@ header {
 .modal-content {
     background: white;
     padding: 25px;
-    border-radius: 20px;
+    border-radius: 50px;
     max-width: 450px;
     width: 90%;
+    border: none;
     display: flex;
     flex-direction: column;
     gap: 10px;
     position: relative;
-    border: 4px solid black;
+    border: 0px solid black;
 }
 .close-popup {
     position: absolute;
@@ -181,8 +228,9 @@ header {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    border: 2px solid black;
-    border-radius: 12px;
+    border: none;
+    background: wheat;
+    border-radius: 48px;
     font-size: 14px;
 }
 #checkout-form button {
@@ -191,8 +239,9 @@ header {
     font-weight: bold;
     background: red;
     color: white;
-    border: 3px solid black;
-    border-radius: 15px;
+    border: none;
+    margin-top: 10px;
+    border-radius: 35px;
     cursor: pointer;
 }
 #checkout-form button:hover { background: aqua; color: black; }
@@ -280,7 +329,7 @@ header {
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-  border: 4px solid black;
+  border: 0px solid black;
   padding: 20px 30px;
   display: none;
   flex-direction: column;
@@ -337,7 +386,7 @@ header {
 
 .modal-content {
   background: #fff;
-  border: 4px solid black;
+  border: 0px solid black;
   width: 100%;
   max-width: 400px;
   text-align: center;
@@ -420,48 +469,15 @@ header {
   .footer-right a { margin-left: 10px; margin-right: 10px; }
 }
 
-.navbar {
-  width: 100%;
-  background: #2c3e50;
-  display: flex;
-  border-top: 4px solid black;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px 0;
-  box-shadow: 0 -3px 8px rgba(0,0,0,0.2);
-text-decoration: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 999; 
-}
 
-.nav-item {
-  color: #bdc3c7;
-  text-align: center;
-  font-size: 12px;
-  transition: 0.2s;
-}
-
-.navbar a { text-decoration: none; }
-
-.nav-item i {
-  font-size: 22px;
-  display: block;
-  margin-bottom: 4px;
-}
-
-.nav-item.active,
-.nav-item:hover {
-  color: #f39c12;
-}
 
 footer {
   background: red;
   padding: 40px 20px;
   color: white;
   font-weight: bold;
-  border-top: 5px solid black;
+  border-top: 3px solid black;
+  
   position: relative;
   z-index: 100;  
 }
@@ -483,7 +499,7 @@ footer {
   width: 60px;
   height: 60px;
   border-radius: 12px;
-  border: 3px solid black;
+  border: 2px solid black;
   object-fit: cover; 
   vertical-align: middle;
 }
@@ -502,9 +518,10 @@ footer {
   color: #f5f5f5;
 }
 
-.footer-left p a {
+.Xrabon {
   color: gold;
-  text-decoration: underline;
+  text-decoration: ;
+  font-size: 24px;  
 } 
 
 .footer-left p i {
@@ -536,7 +553,7 @@ footer {
   padding: 10px;
   color: black;
   border-radius: 12px;
-  border: 3px solid black;
+  border: 2px solid black;
 }
 
 @media(max-width:768px) {
@@ -550,6 +567,42 @@ footer {
     margin-right: 10px;
   }
 }
+.navbar {
+  width: 100%;
+  background: rgba(139, 69, 19, 0.85); 
+  backdrop-filter: blur(4px); 
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  border-top: 3px solid black;
+  box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.2);
+  
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+}
+
+.nav-item {
+  color: #bdc3c7;
+  text-align: center;
+  font-size: 12px;
+  transition: 0.2s;
+}
+
+.nav-item i {
+  font-size: 22px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.nav-item.active,
+.nav-item:hover {
+  color: #f39c12;
+}
+
 
 #preloader {
   position: fixed;
@@ -572,8 +625,8 @@ footer {
 .preloader-logo {
   width: 120px;
   margin-bottom: 20px;
-  border-radius: 50%;
-  border: 6px solid black;
+  border-radius: 38px;
+  border: 3px solid black;
   animation: logoBounce 2s ease infinite;
 }
 
@@ -604,7 +657,7 @@ footer {
   white-space: nowrap;
   display: inline-block;
   min-height: 40px;
-  border: 4px solid black;
+  border: 3px solid black;
   border-radius: 28px;
   padding: 15px;
   margin-top: 20px;
