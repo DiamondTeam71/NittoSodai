@@ -11,38 +11,6 @@ const tableBody = document.querySelector('#productsTable tbody');
 const sectorSelect = document.getElementById('sectorSelect');
 let currentSector = '';
 
-onAuthStateChanged(auth, async user => {
-  if (!user) {
-    window.location.href = "AdminLogin.html";
-    return;
-  }
-
-  try {
-    const snapshot = await get(ref(db, 'users/' + user.uid));
-    const userData = snapshot.val();
-    
-    if (!userData?.isAdmin) {
-      alert("Access denied! আপনি admin নন।");
-      await signOut(auth);
-      window.location.href = "AdminLogin.html";
-      return;
-    }
-
-   
-    const userDisplay = userData.username || user.email;
-    document.getElementById('currentUser').textContent = `লগইন ইউজার: ${userDisplay}`;
-
-  } catch(err) {
-    console.error(err);
-    window.location.href = "AdminLogin.html";
-  }
-});
-
-
-document.getElementById("logoutBtn")?.addEventListener("click", async () => {
-  await signOut(auth);
-  window.location.href = "AdminLogin.html";
-});
 
 sectorSelect.addEventListener('change', () => {
   currentSector = sectorSelect.value;
