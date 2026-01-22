@@ -103,6 +103,53 @@ ME: Mere Dill Pe!!!
   </div>
 </div>
 
+<div id="custom-modal" class="custom-modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+   
+    <img id="modal-img" class="modal-img" src="">
+    
+    <div class="modal-text" id="modal-text"></div>
+        <a href="https://nittosodaibd.netlify.app/নিত্য_সদাই.apk" class="app-download-btn" target="_blank">  
+      <i class="fas fa-download"></i> Our App  
+    </a>  
+  </div>
+</div>
+
+<style>
+
+@keyframes zoomIn{
+  from{transform:scale(.7);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+.custom-modal.active{
+  display:flex;
+}
+
+.app-download-btn {  
+  display: inline-block;  
+  background: linear-gradient(45deg, #00b894, #0984e3);  
+  color: white;  
+  font-family: 'Hind Siliguri', sans-serif;  
+  font-size: 18px;  
+  padding: 10px 25px;  
+  border-radius: 35px;  
+  witdh: 30px;
+  text-decoration: none;  
+  margin-top: 15px;  
+  transition: 0.3s;  
+  border: 0px solid black;  
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);  
+} 
+ 
+.app-download-btn:hover {  
+  transform: scale(1.05);  
+  background: linear-gradient(45deg, #00cec9, #74b9ff);  
+}  
+
+</style>
+
 <div class="hisab">
   <h2><i class="fas fa-shopping-basket"></i> আমাদের জনপ্রিয় পণ্যের ক্যাটাগরি!</h2>
   <div id="google_translate_element" style="display:none;"></div>
@@ -392,6 +439,7 @@ ME: Mere Dill Pe!!!
 
 <script src="assets/js/script.js"></script>
 
+<script type="module" src="assets/js/popupAd.js"></script>
 </body>
 </html>
 

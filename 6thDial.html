@@ -152,6 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 import { firebaseConfig } from './assets/Firebase-Config/FirebaseConfig.js';
+import { push, set } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -235,15 +236,13 @@ function openReviewModal(productId){
   const old = document.querySelector('.review-modal');
   if(old) old.remove();
 
-  const reviews = JSON.parse(localStorage.getItem('reviews_'+productId)) || [];
-
   const modal = document.createElement('div');
   modal.className = 'review-modal';
 
   modal.innerHTML = `
     <div class="review-content">
-      <span style="" id="closeReview">&times;</span>
-      <h3 style="font-size: 17px;
+      <span id="closeReview">&times;</span>
+       <h3 style="font-size: 17px;
     margin-bottom: 20px;
     color: #fff;
     text-align: center;
@@ -255,36 +254,53 @@ function openReviewModal(productId){
     border-radius: 48px;
     border: ppx solid black;
     margin: 10px 20px;">ব্যাবহারকারী দের মতামত!</h3>
+      <div id="reviewList">লোড হচ্ছে...</div>
 
-      <div id="reviewList" style="margin-top: 20px;">
-        ${reviews.map(r => `
-          <div class="review-item">
-            <i class="fa-solid fa-user"></i>
-            <div class="review-text">${r}</div>
-          </div>
-        `).join('')}
-      </div>
-
-      <textarea rows="3" placeholder="আপনার মূল্যবান মতামত লিখুন..."></textarea>
-      <button id="submitReview">আপনার মূল্যবান মতামত সাবমিট করুন!</button>
+      <textarea id="reviewText" rows="3" placeholder="আপনার মতামত লিখুন..."></textarea>
+      <button id="submitReview">সাবমিট করুন</button>
     </div>
   `;
 
   document.body.appendChild(modal);
 
-  modal.querySelector('#closeReview').onclick = ()=>modal.remove();
+  modal.querySelector('#closeReview').onclick = ()=> modal.remove();
 
+  const reviewList = modal.querySelector('#reviewList');
+  const reviewRef = ref(db, `reviews/${productId}`);
+
+  // 🔥 লাইভ রিভিউ লোড
+  onValue(reviewRef, snap=>{
+    reviewList.innerHTML = '';
+    if(!snap.exists()){
+      reviewList.innerHTML = '<p>এখনো কোনো রিভিউ নেই</p>';
+      return;
+    }
+
+    snap.forEach(child=>{
+      const r = child.val();
+      reviewList.innerHTML += `
+        <div class="review-item">
+          <i class="fa-solid fa-user"></i>
+          <div class="review-text">${r.text}</div>
+        </div>
+      `;
+    });
+  });
+
+  // 🔥 সাবমিট রিভিউ
   modal.querySelector('#submitReview').onclick = ()=>{
-    const text = modal.querySelector('textarea').value.trim();
+    const text = modal.querySelector('#reviewText').value.trim();
     if(!text) return alert("রিভিউ লিখুন");
 
-    reviews.push(text);
-    localStorage.setItem('reviews_'+productId, JSON.stringify(reviews));
-    modal.remove();
-    openReviewModal(productId);
+    const newRef = push(reviewRef);
+    set(newRef,{
+      text: text,
+      time: Date.now()
+    });
+
+    modal.querySelector('#reviewText').value = '';
   };
 }
-
 function showProductPopup(product) {
     const oldPopup = document.querySelector('.product-popup');
     if (oldPopup) oldPopup.remove();
