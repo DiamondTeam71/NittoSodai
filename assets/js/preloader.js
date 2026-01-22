@@ -18,5 +18,5 @@ window.addEventListener('load', () => {
     preloader.style.transition = 'opacity 0.5s ease';
     preloader.style.opacity = '0';
     setTimeout(() => preloader.style.display = 'none', 0);
-  }, 000);
+  }, 5000);
 });
