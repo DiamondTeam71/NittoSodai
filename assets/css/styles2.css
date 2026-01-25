@@ -446,7 +446,7 @@ footer {
     position: relative;
 }
 
-.add-to-cart, .review-btn{
+.add-to-cart, .review-btn, .out-of-stock {
   margin-top: 10px;
   padding: 12px;
   background: red;
