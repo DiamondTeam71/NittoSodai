@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FFBD</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    *{box-sizing:border-box}
+body{
+margin:0;
+min-height:100vh;
+font-family:'Hind Siliguri',sans-serif;
+background:url("assets/images/ponno.jpg") center/cover no-repeat fixed;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#fff
+}
+.admin{
+width:100%;
+max-width:330px;
+max-height:630px;
+background:rgba(0,0,0,.55);
+backdrop-filter:blur(20px);
+border-radius:30px;
+padding:28px;
+box-shadow:0 25px 60px rgba(0,0,0,.6);
+animation:fade .6s ease;
+overflow-y:auto;
+scrollbar-width:thin;
+scrollbar-color:rgba(255,255,255,.35) transparent
+}
+.admin::-webkit-scrollbar{
+width:6px
+}
+.admin::-webkit-scrollbar-track{
+background:transparent
+}
+.admin::-webkit-scrollbar-thumb{
+background:rgba(255,255,255,.35);
+border-radius:20px
+}
+.admin::-webkit-scrollbar-thumb:hover{
+background:rgba(255,255,255,.55)
+}
+@keyframes fade{
+from{opacity:0;transform:translateY(30px)}
+to{opacity:1;transform:translateY(0)}
+}
+.admin h1{
+text-align:center;
+margin-bottom:24px;
+font-size:22px;
+letter-spacing:.5px
+}
+label{
+display:block;
+margin-top:16px;
+font-size:14px;
+opacity:.85
+}
+input,textarea{
+width:100%;
+margin-top:8px;
+padding:14px;
+border-radius:20px;
+border:none;
+background:rgba(255,255,255,.12);
+color:#fff;
+outline:none;
+transition:.3s
+}
+textarea{
+min-height:100px;
+resize:none
+}
+input:focus,textarea:focus{
+background:rgba(255,255,255,.2)
+}
+.preview{
+margin-top:14px;
+text-align:center
+}
+.preview img{
+max-width:100%;
+border-radius:20px;
+display:none
+}
+.switch-box{
+margin-top:22px;
+display:flex;
+justify-content:space-between;
+align-items:center
+}
+.switch{
+position:relative;
+width:54px;
+height:28px
+}
+.switch input{
+display:none
+}
+.slider{
+position:absolute;
+inset:0;
+background:rgba(255,255,255,.25);
+border-radius:50px;
+cursor:pointer;
+transition:.4s
+}
+.slider::before{
+content:"";
+width:22px;
+height:22px;
+position:absolute;
+top:3px;
+left:3px;
+background:#fff;
+border-radius:50%;
+transition:.4s
+}
+.switch input:checked + .slider{
+background:rgba(0,255,200,.6)
+}
+.switch input:checked + .slider::before{
+transform:translateX(26px)
+}
+button{
+width:100%;
+margin-top:28px;
+padding:15px;
+border:none;
+border-radius:22px;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+color:#000;
+background:linear-gradient(135deg,#00ffd5,#6effa8);
+box-shadow:0 12px 30px rgba(0,0,0,.4);
+transition:.3s
+}
+button:hover{
+transform:translateY(-3px);
+box-shadow:0 18px 40px rgba(0,0,0,.6)
+}
+#status{
+margin-top:14px;
+font-size:13px;
+text-align:center;
+opacity:.85
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="admin">
+  <h1><i class="fa-solid fa-bullhorn"></i> Popup Admin</h1>
+
+  <label><i class="fa-solid fa-image"></i> Image URL</label>
+  <input type="text" id="img">
+
+  <div class="preview">
+    <img id="previewImg">
+  </div>
+
+  <label><i class="fa-solid fa-heading"></i> Title</label>
+  <input type="text" id="title">
+
+  <label><i class="fa-solid fa-align-left"></i> Text</label>
+  <textarea id="text"></textarea>
+
+  <div class="switch-box">
+    <span><i class="fa-solid fa-toggle-on"></i> Popup Active</span>
+    <label class="switch">
+      <input type="checkbox" id="active">
+      <span class="slider"></span>
+    </label>
+     </div>
+       <button onclick="savePopup()">
+    <i class="fa-solid fa-floppy-disk"></i> Save Popup
+  </button>
+  
+  
+
+
+  <div id="status"></div>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+import { firebaseConfig } from "./assets/Firebase-Config/FirebaseConfig.js";
+
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+const img = document.getElementById('img');
+const title = document.getElementById('title');
+const text = document.getElementById('text');
+const active = document.getElementById('active');
+const status = document.getElementById('status');
+const preview = document.getElementById('previewImg');
+
+/* ===== IMAGE PREVIEW ===== */
+img.addEventListener('input',()=>{
+  if(img.value){
+    preview.src = img.value;
+    preview.style.display='block';
+  }else{
+    preview.style.display='none';
+  }
+});
+
+/* ===== LOAD DATA ===== */
+async function loadPopup(){
+  const ref = doc(db,"popupAd","main");
+  const snap = await getDoc(ref);
+  if(snap.exists()){
+    const d = snap.data();
+    img.value = d.image || "";
+    title.value = d.title || "";
+    text.value = d.text || "";
+    active.checked = d.active || false;
+    if(d.image){
+      preview.src=d.image;
+      preview.style.display='block';
+    }
+  }
+}
+loadPopup();
+
+
+window.savePopup = async ()=>{
+  await setDoc(doc(db,"popupAd","main"),{
+    image: img.value,
+    title: title.value,
+    text: text.value,
+    active: active.checked
+  });
+  status.innerHTML = "✅ Popup Updated Successfully!";
+};
+</script>
+
+</body>
+</html>
