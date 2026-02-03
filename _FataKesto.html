@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<title>Handel YOUR Site Review!</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    background: url('assets/images/ponno.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+    margin: 0;
+    padding: 20px;
+    color: #fff;
+    min-height: 100vh;
+  }
+
+
+  .review-card {
+    background: rgba(0,0,0,0.6);
+    padding: 20px;
+    border-radius: 25px;
+    margin-bottom: 15px;
+    position: relative;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    transition: transform 0.2s;
+  }
+  .review-card:hover {
+    transform: scale(1.02);
+  }
+
+  .review-card strong {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+
+  .review-card p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .review-card .stars {
+    color: #facc15;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .review-card button.delete {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ef4444;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .review-card button.delete:hover {
+    background: #b91c1c;
+  }
+
+  @media(max-width:768px){
+    body {padding: 15px;}
+    .review-card {padding: 15px;}
+  }
+</style>
+</head>
+<body>
+
+
+<div id="reviewsList"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { firebaseConfig } from './assets/Firebase-Config/FirebaseConfig.js';
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const reviewsList = document.getElementById('reviewsList');
+
+async function loadReviews() {
+  reviewsList.innerHTML = "";
+  const querySnapshot = await getDocs(collection(db, "reviews"));
+  const reviews = [];
+  querySnapshot.forEach(docSnap => reviews.push({id: docSnap.id, ...docSnap.data()}));
+  reviews.sort((a,b) => (b.time?.seconds || 0) - (a.time?.seconds || 0));
+
+  reviews.forEach(d => {
+    const card = document.createElement('div');
+    card.classList.add('review-card');
+    card.innerHTML = `
+      <strong>গ্রাহকের নাম: ${d.name}</strong>
+      <p>মতামত: ${d.review}</p>
+      <div class="stars">${'★'.repeat(d.rating)}</div>
+      <button class="delete">Delete</button>
+    `;
+
+    card.querySelector('.delete').addEventListener('click', async () => {
+      if(confirm('Are you sure want to delete this review?')) {
+        await deleteDoc(doc(db, "reviews", d.id));
+        loadReviews();
+      }
+    });
+
+    reviewsList.appendChild(card);
+  });
+}
+
+loadReviews();
+</script>
+
+</body>
+</html>
