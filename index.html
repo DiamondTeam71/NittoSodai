@@ -32,7 +32,7 @@ ME: Mere Dill Pe!!!
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Store",
+  "@type": "LocalBusiness",
   "name": "নিত্য সদাই",
   "image": [
     "https://i.ibb.co/CRmRWN2/2.jpg",
@@ -42,17 +42,83 @@ ME: Mere Dill Pe!!!
   ],
   "@id": "https://nittosodaibd.netlify.app/",
   "url": "https://nittosodaibd.netlify.app/",
+  "logo": "https://assets/images/logo.png",
   "telephone": "+8801300226699",
+  "email": "nittosodai2025@gmail.com",
+  "priceRange": "৳",
   "address": {
     "@type": "PostalAddress",
-    "addressLocality": "Sylhet, Sunamganj Sadar Upazila Sunamganj",
+    "streetAddress": "ষোলঘর পয়েন্ট, কলোনী রোড, সুনামগঞ্জ সদর",
+    "addressLocality": "Sylhet",
+    "postalCode": "3000",
     "addressCountry": "BD"
   },
+  "founder": {
+    "@type": "Person",
+    "name": "মো. মতিউর রহমান সাবিরিন",
+    "jobTitle": "Owner & Founder",
+    "url": "https://wa.me/8801300226699"
+  },
+  "developer": {
+    "@type": "Person",
+    "name": "Xrabon",
+    "jobTitle": "Developer",
+    "url": "https://t.me/XrabonProgrammer"
+  },
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+8801300226699",
+      "contactType": "customer service",
+      "areaServed": "BD",
+      "availableLanguage": ["Bengali", "English"]
+    }
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "10:00",
+      "closes": "21:00"
+    }
+  ],
   "aggregateRating": {
     "@type": "AggregateRating",
-    "ratingValue": "4.8",
-    "reviewCount": "12225"
+    "ratingValue": "4.5",
+    "reviewCount": "2"
   },
+  "review": [
+    {
+      "@type": "Review",
+      "author": "Rahim",
+      "datePublished": "2026-02-03",
+      "reviewBody": "দোকানের সার্ভিস খুব ভালো।",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      }
+    },
+    {
+      "@type": "Review",
+      "author": "Sumi",
+      "datePublished": "2026-02-02",
+      "reviewBody": "দ্রুত ডেলিভারি এবং ভালো পণ্য।",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "4",
+        "bestRating": "5"
+      }
+    }
+  ],
   "sameAs": [
     "https://m.facebook.com/nittosodai.coms/",
     "https://www.instagram.com/nittosodai.coms/",
@@ -275,6 +341,132 @@ ME: Mere Dill Pe!!!
   <span class="close">&times;</span>
   <img class="lightbox-img" src="">
 </div>
+
+<section class="review-section">
+  <h2>"নিত্য সদাই" এর সার্ভিসে আপনার সন্তোষ্টি প্রকাশ করুন!</h2>
+
+  <form id="reviewForm">
+    <input type="text" id="userName" placeholder="আপনার নাম" required>
+
+   <textarea id="userReview" placeholder="আপনার মতামত লিখুন"></textarea>
+   
+    <div class="star-rating">
+      <i class="fa fa-star" data-value="1"></i>
+      <i class="fa fa-star" data-value="2"></i>
+      <i class="fa fa-star" data-value="3"></i>
+      <i class="fa fa-star" data-value="4"></i>
+      <i class="fa fa-star" data-value="5"></i>
+    </div>
+
+    <button type="submit">মতামত সাবমিট করুন</button>
+  </form>
+  
+
+
+
+</section>
+
+<section class="review-section">
+  <h2>"নিত্য সদাই" কে নিয়ে সকলের কি মতামত — দেখে নিন!</h2>
+    <div id="reviewsList"></div>
+  </section>
+
+<style>
+    .review-section{
+  padding:20px;
+  background: wheat;
+  color:#fff;
+  border-radius:49px;
+  margin:20px;
+}
+
+.review-section h2{
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+  background: red;
+  border-radius: 38px;
+  border: 0px solid black;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+}
+
+.review-section input,
+.review-section textarea{
+  width:100%;
+  padding:10px;
+  margin-bottom:10px;
+  border-radius:20px;
+  border:none;
+}
+
+.star-rating{
+  text-align:center;
+  margin:10px 0;
+}
+
+.star-rating i{
+  font-size:28px;
+  color:#555;
+  cursor:pointer;
+}
+
+.star-rating i.active{
+  color:gold;
+}
+
+.review-section button{
+  width:100%;
+  padding:10px;
+  background:#00b894;
+  color:white;
+  border:none;
+  margin-top: 15px;
+  border-radius:25px;
+  margin-bottom: 15px;
+  font-size:16px;
+}
+
+.review-card {
+  background: #0a0f23; 
+  margin: 12px auto;
+  padding: 16px 24px;
+  text-align: center;
+  border-radius: 49px; 
+  
+  transition: transform 0.3s ease;
+  max-width: 350px;
+  color: #fff;
+  
+}
+
+.review-card:hover {
+  transform: translateY(-5px); 
+  
+}
+
+.review-card .stars {
+  color: gold;
+  font-size: 1.2rem; 
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+.review-card p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+  color: #ccc;
+}
+
+
+</style>
+
+<script type="module" src="assets/js/review.js"></script>
 
 <footer>
   <div class="footer-container">
