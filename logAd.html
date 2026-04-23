@@ -181,8 +181,55 @@ button:hover {
     </div>
   </div>
 </div>
+<script>
+    document.addEventListener("click",()=>{const s=new Audio("./click.mp3");s.play()});
+</script>
+<script>
+const AUTH_SECRET = "GMTP66Tags654@$$$";
+const AUTH_PURKA = "No_Name_GMTP";
 
-<script type="module" src="assets/js/script3.js"></script>
- <script src="assets/js/script4.js"></script>
+if(localStorage.getItem("admin_logged")==="true"){
+  window.location.href = "-_.iosBGB.html";
+}
+
+document.getElementById("loginBtn").onclick = () => {
+  const user = document.getElementById("loginInput").value.trim();
+  const pass = document.getElementById("loginPassword").value.trim();
+
+  if(user===AUTH_SECRET && pass===AUTH_PURKA){
+    localStorage.setItem("admin_logged","true");
+    localStorage.setItem("admin_email",user);
+    window.location.href = "-_.iosbgb.html";
+  } else {
+    alert("ভুল ইউজারনেম বা পাসওয়ার্ড");
+  }
+};
+
+function togglePassword(el,id){
+  const input=document.getElementById(id);
+  input.type=input.type==="password"?"text":"password";
+  el.classList.toggle("fa-eye");
+  el.classList.toggle("fa-eye-slash");
+}
+
+function openForgotPasswordPopup(){
+  document.getElementById("forgotPasswordPopup").style.display="flex";
+}
+
+function closeForgotPasswordPopup(){
+  document.getElementById("forgotPasswordPopup").style.display="none";
+}
+
+function submitForgotPassword(){
+  const mail=document.getElementById("forgotEmail").value.trim();
+  if(!mail){
+    alert("ইমেইল দিন");
+    return;
+  }
+  alert("রিসেট লিংক নট GRANTED");
+  closeForgotPasswordPopup();
+}
+</script>
+
 </body>
 </html>
